@@ -1,7 +1,9 @@
 package com.amazonbyod.s3;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import com.amazonaws.auth.AWSCredentials;
@@ -9,7 +11,6 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
-import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.util.StringUtils;
 import com.amazonbyod.awsprop.AWSProjectProperties;
 
@@ -17,7 +18,7 @@ public class S3FileUpload {
 	
 	 static AWSProjectProperties awscredentials = new AWSProjectProperties();
 	 static S3Operations s3 = new S3Operations();
-	 static final String bucketName = "aws-marketplace-immersion-project";
+	 static final String bucketName = "amazon-aws-immersion-project";
 	public static void main(String args[]) throws IOException{
 		
 	    AWSCredentials credentials = new BasicAWSCredentials(awscredentials.getAccessKey(), awscredentials.getSecretKey());
@@ -28,14 +29,35 @@ public class S3FileUpload {
 	    List<Bucket> buckets = s3.listofBuckets(s3client);
 	    for (Bucket bucket : buckets) {
 	            System.out.println(bucket.getName() + "\t ----------------->" +
-	                    StringUtils.fromDate(bucket.getCreationDate()));
+	                    StringUtils.fromDate(bucket.getCreationDate())+ "\t ----------------->" +bucket.getOwner());
 	    }
 	    //Step- 3 Create Folder inside Bucket
-	    s3.createFolder(bucketName, "/stock", s3client);
-	    //s3client.putObject(new PutObjectRequest(bucketName, "/applstock.csv", 
-	    		//new File("/home/abhinandan/TE/Datasets/Project/awsproject/WIKI-FB.csv")));
+	    s3.createFolder(bucketName, "stockdata", s3client);
+	    s3.createFolder(bucketName, "weatherdata", s3client);
+	    //s3client.putObject(new PutObjectRequest(bucketName, "stockdata/WIKI-AAPL.csv", 
+	    		//new File("/home/abhinandan/TE/Datasets/Project/AWS/Datasets/Mockup/Stock/WIKI-AAPL.csv")));
+	    
+	   // ObjectMetadata metaData = new ObjectMetadata();
+	   // ByteArrayInputStream input = new ByteArrayInputStream("Hello World!112".getBytes());
+	    
+	   // s3client.putObject(bucketName, "hello.txt", input, metaData);
+	    
+	    
+	    
 	    //Step -4 List of objects
 	    s3.listofObjects(s3client, bucketName);
+	    
+	    //Step -5 Read From S3
+	    //s3.readFromS3(s3client, bucketName, "hello.txt");
+	    
+	    String source = "This is the source of my input stream";
+	    InputStream in = new ByteArrayInputStream(source.getBytes(StandardCharsets.UTF_8));
+	    
+	    //Step -6 Write in S3
+	    s3.writeinS3(s3client, bucketName, "hello.txt", in);
+	    
+	  //Step -7 Read From S3
+	    s3.readFromS3(s3client, bucketName, "hello.txt");
 	    
 
 	}

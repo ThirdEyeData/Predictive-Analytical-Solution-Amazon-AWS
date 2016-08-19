@@ -1,10 +1,15 @@
 package com.amazonbyod.s3;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.http.client.methods.HttpRequestBase;
 
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
@@ -13,6 +18,7 @@ import com.amazonaws.services.s3.model.AbortMultipartUploadRequest;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.CompleteMultipartUploadRequest;
 import com.amazonaws.services.s3.model.CompleteMultipartUploadResult;
+import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.InitiateMultipartUploadRequest;
 import com.amazonaws.services.s3.model.InitiateMultipartUploadResult;
 import com.amazonaws.services.s3.model.ListObjectsRequest;
@@ -20,8 +26,12 @@ import com.amazonaws.services.s3.model.ObjectListing;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PartETag;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.model.UploadPartRequest;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
 
 /**
  * @author abhinandan
@@ -34,6 +44,7 @@ public class S3Operations {
 	 * @param bucketName
 	 */
 	public void createBucket(AmazonS3 s3client, String bucketName) {
+		s3client.setRegion(Region.getRegion(Regions.US_WEST_2));
 		if (!s3client.doesBucketExist(bucketName)) {
 			s3client.createBucket(bucketName);
 		}
@@ -82,7 +93,7 @@ public class S3Operations {
      * @param bucketName
      */
 	public void listofObjects(AmazonS3 s3client, String bucketName) {
-		ListObjectsRequest listObjectsRequest = new ListObjectsRequest().withBucketName(bucketName).withPrefix("/");
+		ListObjectsRequest listObjectsRequest = new ListObjectsRequest().withBucketName(bucketName).withPrefix("");
 		ObjectListing objectListing;
 
 		do {
@@ -104,11 +115,9 @@ public class S3Operations {
 	 * @param filePath
 	 * @return
 	 */
-	public String S3Upload(String existingBucketName, String keyName, String filePath) {
+	public String S3Upload(AmazonS3 s3Client,String existingBucketName, String keyName, String filePath) {
 
 		String eTag = "";
-
-		AmazonS3 s3Client = new AmazonS3Client(new ProfileCredentialsProvider());
 
 		// Create a list of UploadPartResponse objects. You get one of these
 		// for each part upload.
@@ -156,5 +165,31 @@ public class S3Operations {
 
 		return eTag;
 	}
+	
+	
+	
+	public void readFromS3(AmazonS3 s3Client,String bucketName, String key) throws IOException {
+	    S3Object s3object = s3Client.getObject(new GetObjectRequest(
+	            bucketName, key));
+	    System.out.println(s3object.getObjectMetadata().getContentType());
+	    System.out.println(s3object.getObjectMetadata().getContentLength());
+
+	    BufferedReader reader = new BufferedReader(new InputStreamReader(s3object.getObjectContent()));
+	    String line;
+	    while((line = reader.readLine()) != null) {
+	      // can copy the content locally as well
+	      // using a buffered writer
+	      System.out.println(line);
+	    }
+	  }
+	
+	
+	
+	public void writeinS3(AmazonS3 s3Client,String bucketName, String key ,InputStream objectContent) throws IOException {
+	    S3Object s3object = s3Client.getObject(new GetObjectRequest(
+	            bucketName, key));
+	    String source = "This is the source of my input stream";
+	    s3object.setObjectContent(new S3ObjectInputStream(new ByteArrayInputStream(source.getBytes()), null));
+	  }
 
 }
