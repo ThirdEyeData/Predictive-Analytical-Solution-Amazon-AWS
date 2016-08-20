@@ -1,4 +1,4 @@
-package com.amazonbyod.stockdata;
+package com.amazonbyod.mockupdata;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,21 +10,6 @@ import com.jimmoores.quandl.Row;
 import com.jimmoores.quandl.TabularResult;
 
 import au.com.bytecode.opencsv.CSVWriter;
-
-/*System.out.println(allRows.next());
-System.out.println(allRows.next().getString(0));
-System.out.println(allRows.next().getString(1));
-System.out.println(allRows.next().getString(2));
-System.out.println(allRows.next().getString(3));
-System.out.println(allRows.next().getString(4));
-System.out.println(allRows.next().getString(5));
-System.out.println(allRows.next().getString(6));
-System.out.println(allRows.next().getString(7));
-System.out.println(allRows.next().getString(8));
-System.out.println(allRows.next().getString(9));
-System.out.println(allRows.next().getString(10));
-System.out.println(allRows.next().getString(11));
-System.out.println(allRows.next().getString(12));*/
 
 public class CollectStockData {
 

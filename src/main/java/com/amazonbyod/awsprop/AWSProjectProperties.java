@@ -15,7 +15,7 @@ public class AWSProjectProperties {
 
 	static Properties prop = new Properties();
 	static InputStream input = Thread.currentThread().getContextClassLoader()
-			.getResourceAsStream("AwsCredentials.properties");
+			.getResourceAsStream("ProjectConf.properties");
 
 	/**
 	 * @return the accessKey

@@ -6,10 +6,10 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import com.amazonbyod.stockdata.StockDataMockup;
+import com.amazonbyod.mockupdata.DataMockupGenerator;
 
 public class StockIncrementalData implements Job{
-	StockDataMockup stockMockup = new StockDataMockup();
+	DataMockupGenerator stockMockup = new DataMockupGenerator();
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		try {
