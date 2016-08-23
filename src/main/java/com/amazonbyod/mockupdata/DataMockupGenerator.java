@@ -1,7 +1,10 @@
 package com.amazonbyod.mockupdata;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
@@ -14,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import org.fluttercode.datafactory.impl.DataFactory;
 import org.joda.time.DateTime;
@@ -22,6 +26,7 @@ import com.amazonbyod.listclass.CompanyProducts;
 import com.amazonbyod.listclass.CompanyProfile;
 import com.amazonbyod.listclass.Companyannouncements;
 import com.amazonbyod.listclass.StockData;
+import com.amazonbyod.listclass.WeatherData;
 import com.amazonbyod.mysql.MySQLConnection;
 import com.amazonbyod.scheduler.StreamingMockupData;
 
@@ -34,6 +39,8 @@ import au.com.bytecode.opencsv.CSVWriter;
 public class DataMockupGenerator {
 
 	static final long unixTime = System.currentTimeMillis() / 1000L;
+    String companySymbol;
+	
 
 	/**
 	 * @param directoryName
@@ -228,15 +235,11 @@ public class DataMockupGenerator {
 			lowStockVal = temp;
 		}
 
-		String csvRow = companySymbol + "," + dateformat.format(date) + "," + tformater.format(date) + ","
-				+ openStockVal + "," + highStockVal + "," + lowStockVal + "," + closeStockVal + "," + stockVolume + ","
-				+ "0" + "," + "1" + "," + openStockVal + "," + highStockVal + "," + lowStockVal + "," + closeStockVal
-				+ "," + +stockVolume + "\n";
 		
 		List<StockData> stockrow=new ArrayList<StockData>();
 		try {
 			StockData stock = new StockData(companySymbol, dateformat.parse(dateformat.format(date)),
-					tformater.parse(tformater.format(date)), openStockVal, highStockVal, lowStockVal, closeStockVal,
+					date, openStockVal, highStockVal, lowStockVal, closeStockVal,
 					stockVolume, 0, 1, openStockVal, highStockVal, lowStockVal,
 					closeStockVal, stockVolume);
 			stockrow.add(stock);
@@ -280,6 +283,51 @@ public class DataMockupGenerator {
 
 		float avgWindSpeed = Float.parseFloat(winSpeed + "." + winSpeedpoint);
 		float avgRainFall = Float.parseFloat(rainfall + "." + rainfallpoint);
+
+	}
+	
+	public List<WeatherData> incrementalWeatherData() {
+		String csvFile = "Incremental_weather_data.csv";
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ",";
+		Random random = new Random();
+		int randomNumber = random.nextInt(365 - 1) + 1;
+		List<WeatherData> row = new ArrayList<WeatherData>();
+		try {
+			br = new BufferedReader(new FileReader(csvFile));
+			int count = 0;
+			while ((line = br.readLine()) != null) {
+				count++;
+
+				if (randomNumber == count) {
+					// use comma as separator
+					String[] weatherData = line.split(cvsSplitBy);
+					String stationCode = weatherData[0];
+					String stationName = weatherData[1];
+					float lat = Float.parseFloat(weatherData[2]);
+					float lng = Float.parseFloat(weatherData[3]);
+					Date date = new Date();
+					int tmax = Integer.parseInt(weatherData[5]);
+					int tmin = Integer.parseInt(weatherData[6]);
+					float wind = Float.parseFloat(weatherData[7]);
+					float rain = Float.parseFloat(weatherData[8]);
+					int snowfall = Integer.parseInt(weatherData[9]);
+					int storm = 0;
+					if (wind >= 10 || rain >= 5) {
+						storm = 1;
+					}
+					WeatherData weather = new WeatherData(stationCode, stationName, lat, lng, date, tmax, tmin, wind,
+							rain, snowfall, storm);
+					row.add(weather);
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return row;
 
 	}
 	
@@ -345,9 +393,16 @@ public class DataMockupGenerator {
 		
 		return list;
 	}
+	
+	public String getCompanySymbol() {
+		return companySymbol;
+	}
+
+	public void setCompanySymbol(String companySymbol) {
+		this.companySymbol = companySymbol;
+	}
 
 	public static void main(String args[]) throws IOException {
-		StreamingMockupData streaming = new StreamingMockupData();
 		MySQLConnection mysql = new MySQLConnection();
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
@@ -368,6 +423,12 @@ public class DataMockupGenerator {
 		 //Generate Company Profile
 		 List<CompanyProfile> cplist=mockup.createCompanyProfile();
 		 String companyID=cplist.get(0).getCompanyId();
+		 String companySymbol=cplist.get(0).getCompanySymbol();
+		 
+		 //Initialized Quartz 
+		 StreamingMockupData streaming = new StreamingMockupData(companySymbol);
+		 
+		 mockup.setCompanySymbol(companySymbol);
 		 //Generate Company Products
 		 List<CompanyProducts> cproList = mockup.createCompanyProduct(companyID);
 		//Generate Company announcement
@@ -376,16 +437,16 @@ public class DataMockupGenerator {
 		 //Mysql Connection
 		 Connection conn = mysql.mysqlConnect();
 		 //Insert Data Into Mysql Table
-		 mysql.insertDataCompanyMaster(conn, cplist);
-		 mysql.insertDataCompanyAnnouncement(conn, calist);
-		 mysql.insertDataCompanyProduct(conn, cproList);
+		// mysql.insertDataCompanyMaster(conn, cplist);
+		// mysql.insertDataCompanyAnnouncement(conn, calist);
+		 //mysql.insertDataCompanyProduct(conn, cproList);
 		 
-		 mockup.minMockUpData("/home/abhinandan/TE/Datasets/Project/AWS/Datasets/Mockup/Stock",
+		 /*mockup.minMockUpData("/home/abhinandan/TE/Datasets/Project/AWS/Datasets/Mockup/Stock",
 		 startDate, endDate,
-		 companyID, 35, 42, 35000, 37541);
+		 companyID, 35, 42, 35000, 37541);*/
 		// mockup.realtimeMockUpData("/home/abhinandan/TE/Datasets/Project/AWS/Datasets/Mockup/Stock","TED",
 		// 35, 38, 35000, 37541);
-		// streaming.startStreaming();
+		streaming.startStreaming();
 		 
 	}
 

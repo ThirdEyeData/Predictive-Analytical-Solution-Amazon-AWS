@@ -12,6 +12,14 @@ import org.joda.time.DateTime;
 
 public class Sample {
 	
+	static String sample;
+	
+	public String getSample() {
+		return sample;
+	}
+
+	
+    
 	public static void main(String args[]){
 		Date date = new Date();
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
@@ -41,7 +49,10 @@ public class Sample {
 			}
 			
 			
-			
+			Sample s =new Sample();
+			sample="Hello";
+			Test t =new Test();
+			t.testing();
 			
 			
 			//System.out.println(seconds);

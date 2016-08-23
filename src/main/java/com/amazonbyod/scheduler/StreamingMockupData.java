@@ -21,11 +21,21 @@ import org.quartz.impl.StdSchedulerFactory;
 
 public class StreamingMockupData {
 	
+	String companySymbol;
+
+	public StreamingMockupData(String companySymbol){
+		this.companySymbol=companySymbol;
+	}
+	
+	public String getCompanySymbol() {
+		return companySymbol;
+	}
+	
 	private final static Logger logger = Logger.getLogger(StreamingMockupData.class);
 	
 	public void startStreaming() {
 		try {
-
+			
 			// First we must get a reference to a scheduler
 	        SchedulerFactory sf = new StdSchedulerFactory();
 	        Scheduler sched = sf.getScheduler();
@@ -43,6 +53,8 @@ public class StreamingMockupData {
 					.startAt(new Date(System.currentTimeMillis()))
 					.withSchedule( CronScheduleBuilder.cronSchedule( "0/10 * * * * ?"))
 					.build();
+			
+			job1.getJobDataMap().put("CompanySymbol", getCompanySymbol());
 			
 			sched.scheduleJob(job1, trigger1);
 			

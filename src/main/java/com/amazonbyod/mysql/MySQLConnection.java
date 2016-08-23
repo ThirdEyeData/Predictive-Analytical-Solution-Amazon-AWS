@@ -34,6 +34,7 @@ public class MySQLConnection {
 			DB_NAME = prop.getMysql_dbname();
 			final String DB_URL = prop.getMysql_DB_URL() + DB_NAME + "?user=" + prop.getMysql_username() + "&password="
 					+ prop.getMysql_password();
+			System.out.println(DB_URL);
 			connect = DriverManager.getConnection(DB_URL);
 		} catch (SQLException | IOException e) {
 			// TODO Auto-generated catch block
@@ -65,6 +66,12 @@ public class MySQLConnection {
 
 	}
 
+	
+	
+	public java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
+	    return new java.sql.Date(date.getTime());
+	}
+	
 	public boolean tableExits(Connection conn, String tableName) {
 		boolean flag = false;
 		try {
@@ -174,15 +181,14 @@ public class MySQLConnection {
 			preparedStatement.setString(2, row.get(0).getComapanyName());
 			preparedStatement.setString(3, row.get(0).getCompanySymbol());
 			preparedStatement.setString(4, row.get(0).getCompanyAddress());
-			preparedStatement.setDate(5, (Date) row.get(0).getCompany_foundedon());
+			preparedStatement.setDate(5, convertJavaDateToSqlDate(row.get(0).getCompany_foundedon()));
 			preparedStatement.setString(6, row.get(0).getCompany_ceo());
 			preparedStatement.setDouble(7, Double.parseDouble(row.get(0).getCompany_assets()));
 			preparedStatement.setDouble(8, Double.parseDouble(row.get(0).getCompany_revenue()));
 			
 			preparedStatement.executeUpdate();
 			
-			preparedStatement.close();
-			conn.close();
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -203,14 +209,14 @@ public class MySQLConnection {
 			preparedStatement.setString(3, row.get(0).getProduct_name());
 			preparedStatement.setString(4, row.get(0).getProduct_description());
 			preparedStatement.setString(5, row.get(0).getProduct_type());
-			preparedStatement.setDate(6, (Date) row.get(0).getProduct_initaldate());
+			preparedStatement.setDate(6, convertJavaDateToSqlDate(row.get(0).getProduct_initaldate()));
 			preparedStatement.setInt(7, row.get(0).getMarketvol());
 			preparedStatement.setFloat(8, row.get(0).getLat());
 			preparedStatement.setFloat(9, row.get(0).getLng());
 			preparedStatement.setString(10, row.get(0).getProduct_loc());
 			
-			preparedStatement.close();
-			conn.close();
+			preparedStatement.executeUpdate();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -227,7 +233,7 @@ public class MySQLConnection {
 			PreparedStatement preparedStatement = conn.prepareStatement(insertTableSQL);
 			preparedStatement.setInt(1, Integer.parseInt(row.get(0).getAnnouncementId()));
 			preparedStatement.setInt(2, Integer.parseInt(row.get(0).getCompanyID()));
-			preparedStatement.setDate(3, (Date) row.get(0).getAnnouncementDate());
+			preparedStatement.setDate(3, convertJavaDateToSqlDate(row.get(0).getAnnouncementDate()));
 			preparedStatement.setString(4, row.get(0).getAnnouncemnType());
 			preparedStatement.setString(5, row.get(0).getAnnouncemnBy());
 			preparedStatement.setString(6, row.get(0).getAnnouncemnFrom());
@@ -235,8 +241,8 @@ public class MySQLConnection {
 			
 			preparedStatement.executeUpdate();
 			
-			preparedStatement.close();
-			conn.close();
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

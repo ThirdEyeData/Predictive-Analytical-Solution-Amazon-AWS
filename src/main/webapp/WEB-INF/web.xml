@@ -4,4 +4,14 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>RedShiftWebServices</servlet-name>
+  	<display-name>RedShiftWebServices</display-name>
+  	<description></description>
+  	<servlet-class>com.amazonbyod.webservices.RedShiftWebServices</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>RedShiftWebServices</servlet-name>
+  	<url-pattern>/RedShiftWebServices</url-pattern>
+  </servlet-mapping>
 </web-app>

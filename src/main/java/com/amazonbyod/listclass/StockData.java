@@ -21,6 +21,7 @@ public class StockData {
   
 	public StockData(String companySymbol,Date stockDate, Date stocktime,float stockopen, float stockhigh,float stocklow, float stockclose, int stockvol, float stockdiv,
 		int stocksplit, float stockadjopen, float stockadjhigh,float stockadjlow,float stockadjclose,int stockadjvol) {
+		this.companySymbol=companySymbol;
 		this.stockDate=stockDate;
 		this.stockopen=stockopen;
 		this.stockhigh=stockhigh;
