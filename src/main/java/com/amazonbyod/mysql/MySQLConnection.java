@@ -161,7 +161,6 @@ public class MySQLConnection {
 		try {
 			Statement statement = conn.createStatement();
 			int result = statement.executeUpdate("TRUNCATE " + tableName);
-			conn.commit();
 			if(result>0){
 				flag=true;
 			}
@@ -175,6 +174,7 @@ public class MySQLConnection {
 	public void insertDataCompanyMaster(Connection conn, List<CompanyProfile> row) {
 		String insertTableSQL = "INSERT INTO `company_master`(`company_id`, `company_name`, `company_symbol`, `company_address`, `company_foundedon`, `company_ceo`, `comapny_assets`, `company_revenue`) "
 				+ "VALUES (?,?,?,?,?,?,?,?)";
+		truncateTable(conn, "company_master");
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(insertTableSQL);
 			preparedStatement.setInt(1, Integer.parseInt(row.get(0).getCompanyId()));
@@ -201,21 +201,25 @@ public class MySQLConnection {
 	public void insertDataCompanyProduct(Connection conn, List<CompanyProducts> row) {
 		String insertTableSQL = "INSERT INTO `company_product`(`product_id`, `company_id`, `product_name`, `product_description`, `product_type`, `product_initialrelease`, `product_marketvol`, `product_manufacture_lat`, `product_manufacture_long`, `product_manufacture_loc`) "
 				+ "VALUES (?,?,?,?,?,?,?,?,?,?)";
+		truncateTable(conn, "company_product");
 		
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(insertTableSQL);
-			preparedStatement.setInt(1, Integer.parseInt(row.get(0).getProductId()));
-			preparedStatement.setInt(2, Integer.parseInt(row.get(0).getCompanyID()));
-			preparedStatement.setString(3, row.get(0).getProduct_name());
-			preparedStatement.setString(4, row.get(0).getProduct_description());
-			preparedStatement.setString(5, row.get(0).getProduct_type());
-			preparedStatement.setDate(6, convertJavaDateToSqlDate(row.get(0).getProduct_initaldate()));
-			preparedStatement.setInt(7, row.get(0).getMarketvol());
-			preparedStatement.setFloat(8, row.get(0).getLat());
-			preparedStatement.setFloat(9, row.get(0).getLng());
-			preparedStatement.setString(10, row.get(0).getProduct_loc());
+			for(int i=0;i<row.size();i++){
+			preparedStatement.setInt(1, Integer.parseInt(row.get(i).getProductId()));
+			preparedStatement.setInt(2, Integer.parseInt(row.get(i).getCompanyID()));
+			preparedStatement.setString(3, row.get(i).getProduct_name());
+			preparedStatement.setString(4, row.get(i).getProduct_description());
+			preparedStatement.setString(5, row.get(i).getProduct_type());
+			preparedStatement.setDate(6, convertJavaDateToSqlDate(row.get(i).getProduct_initaldate()));
+			preparedStatement.setInt(7, row.get(i).getMarketvol());
+			preparedStatement.setFloat(8, row.get(i).getLat());
+			preparedStatement.setFloat(9, row.get(i).getLng());
+			preparedStatement.setString(10, row.get(i).getProduct_loc());
 			
 			preparedStatement.executeUpdate();
+			
+			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -229,18 +233,23 @@ public class MySQLConnection {
 		String insertTableSQL = "INSERT INTO `company_announcement`(`announcemnt_id`, `company_id`, `announcemnt_date`, `announcemnt_type`, `announcemnt_by`, `announcemnt_from`, `announcemnt_path`) "
 				+ "VALUES (?,?,?,?,?,?,?)";
 		
+		truncateTable(conn, "company_announcement");
+		
 		try {
+			
+			
 			PreparedStatement preparedStatement = conn.prepareStatement(insertTableSQL);
-			preparedStatement.setInt(1, Integer.parseInt(row.get(0).getAnnouncementId()));
-			preparedStatement.setInt(2, Integer.parseInt(row.get(0).getCompanyID()));
-			preparedStatement.setDate(3, convertJavaDateToSqlDate(row.get(0).getAnnouncementDate()));
-			preparedStatement.setString(4, row.get(0).getAnnouncemnType());
-			preparedStatement.setString(5, row.get(0).getAnnouncemnBy());
-			preparedStatement.setString(6, row.get(0).getAnnouncemnFrom());
+			for(int i=0;i<row.size();i++){
+			preparedStatement.setInt(1, Integer.parseInt(row.get(i).getAnnouncementId()));
+			preparedStatement.setInt(2, Integer.parseInt(row.get(i).getCompanyID()));
+			preparedStatement.setDate(3, convertJavaDateToSqlDate(row.get(i).getAnnouncementDate()));
+			preparedStatement.setString(4, row.get(i).getAnnouncemnType());
+			preparedStatement.setString(5, row.get(i).getAnnouncemnBy());
+			preparedStatement.setString(6, row.get(i).getAnnouncemnFrom());
 			preparedStatement.setString(7, "");
 			
 			preparedStatement.executeUpdate();
-			
+			}
 			
 			
 		} catch (SQLException e) {

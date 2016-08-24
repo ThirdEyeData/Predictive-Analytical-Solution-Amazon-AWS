@@ -96,23 +96,29 @@ public class AwsRedshiftOperations {
 	}
 
 	public void insertWeatherData(Connection conn, List<WeatherData> row) {
-		String insertTableSQL = "INSERT INTO weather_storm_datademo (station_code,station_name,lat ,lng ,wdate,tmax ,tmin ,windspeed ,rainfall ,snowfall ,storm)"
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+		String insertTableSQL = "INSERT INTO weather_data_incremental (station_code,station_name,lat ,lng ,wdate,tmax ,tmin ,windspeed ,rainfall ,snowfall ,storm,flag)"
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(insertTableSQL);
-			preparedStatement.setString(1, row.get(0).getStationCode());
-			preparedStatement.setString(2, row.get(0).getStationName());
-			preparedStatement.setFloat(3, row.get(0).getLat());
-			preparedStatement.setFloat(4, row.get(0).getLng());
-			preparedStatement.setDate(5, convertJavaDateToSqlDate(row.get(0).getDate()));
-			preparedStatement.setInt(6, row.get(0).getTmax());
-			preparedStatement.setInt(7, row.get(0).getTmin());
-			preparedStatement.setFloat(8, row.get(0).getWind());
-			preparedStatement.setFloat(9, row.get(0).getRain());
-			preparedStatement.setInt(10, row.get(0).getSnowfall());
-			preparedStatement.setInt(11, row.get(0).getStorm());
-			
+			int flag=0;
+			System.out.println(row.size());
+			for(int i=0;i<row.size();i++){
+			preparedStatement.setString(1, row.get(i).getStationCode());
+			preparedStatement.setString(2, row.get(i).getStationName());
+			preparedStatement.setFloat(3, row.get(i).getLat());
+			preparedStatement.setFloat(4, row.get(i).getLng());
+			preparedStatement.setDate(5, convertJavaDateToSqlDate(row.get(i).getDate()));
+			preparedStatement.setInt(6, row.get(i).getTmax());
+			preparedStatement.setInt(7, row.get(i).getTmin());
+			preparedStatement.setFloat(8, row.get(i).getWind());
+			preparedStatement.setFloat(9, row.get(i).getRain());
+			preparedStatement.setInt(10, row.get(i).getSnowfall());
+			//preparedStatement.setInt(11, row.get(i).getStorm());
+			preparedStatement.setInt(11, 0);
+			preparedStatement.setInt(12, flag);
+			flag=1;
 			preparedStatement.executeUpdate();
+			}
 			preparedStatement.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -134,7 +140,7 @@ public class AwsRedshiftOperations {
 	
 	
 	public void loadDatafromS3(Connection conn,String tablename,String bucketStructure,String key){
-		String loadSQL = "copy stock_data from 's3://amazon-immersion-project/WIKI-AAPL (copy)1.csv' "
+		String loadSQL = "copy "+tablename+" from 's3://"+bucketStructure+"/"+key+"' "
 				+ "credentials 'aws_access_key_id=AKIAJFETOLAADYA37PTQ;aws_secret_access_key=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' "
 				+ "delimiter ',' region 'us-west-2'";
 		

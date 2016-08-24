@@ -1,16 +1,17 @@
 package com.amazonbyod.s3;
 
-import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.util.StringUtils;
 import com.amazonbyod.awsprop.AWSProjectProperties;
 
@@ -23,6 +24,7 @@ public class S3FileUpload {
 		
 	    AWSCredentials credentials = new BasicAWSCredentials(awscredentials.getAccessKey(), awscredentials.getSecretKey());
 	    AmazonS3 s3client = new AmazonS3Client(credentials);
+	    s3client.setRegion(Region.getRegion(Regions.US_WEST_2));
 	    //Step -1 Create Bucket
 	    s3.createBucket(s3client, bucketName);
 	    //Step -2 List of Buckets
@@ -34,8 +36,9 @@ public class S3FileUpload {
 	    //Step- 3 Create Folder inside Bucket
 	    s3.createFolder(bucketName, "stockdata", s3client);
 	    s3.createFolder(bucketName, "weatherdata", s3client);
-	    //s3client.putObject(new PutObjectRequest(bucketName, "stockdata/WIKI-AAPL.csv", 
-	    		//new File("/home/abhinandan/TE/Datasets/Project/AWS/Datasets/Mockup/Stock/WIKI-AAPL.csv")));
+	    /*s3client.putObject(new PutObjectRequest(bucketName, "stockdata/WIKI-AAPL1.csv", 
+	    		new File("/home/abhinandan/TE/Datasets/Project/AWS/Datasets/Mockup/Stock/WIKI-AAPL.csv")));*/
+	    s3.S3Upload(s3client, bucketName, "stockdata/WIKI-AAPL1.csv", "/home/abhinandan/TE/Datasets/Project/AWS/Datasets/Mockup/Stock/data.csv");
 	    
 	   // ObjectMetadata metaData = new ObjectMetadata();
 	   // ByteArrayInputStream input = new ByteArrayInputStream("Hello World!112".getBytes());
@@ -50,14 +53,14 @@ public class S3FileUpload {
 	    //Step -5 Read From S3
 	    //s3.readFromS3(s3client, bucketName, "hello.txt");
 	    
-	    String source = "This is the source of my input stream";
+	   /* String source = "This is the source of my input stream";
 	    InputStream in = new ByteArrayInputStream(source.getBytes(StandardCharsets.UTF_8));
 	    
 	    //Step -6 Write in S3
 	    s3.writeinS3(s3client, bucketName, "hello.txt", in);
 	    
 	  //Step -7 Read From S3
-	    s3.readFromS3(s3client, bucketName, "hello.txt");
+	    s3.readFromS3(s3client, bucketName, "hello.txt");*/
 	    
 
 	}
