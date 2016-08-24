@@ -140,6 +140,7 @@ public class AwsRedshiftOperations {
 	
 	
 	public void loadDatafromS3(Connection conn,String tablename,String bucketStructure,String key){
+		truncateTable(conn,tablename);
 		String loadSQL = "copy "+tablename+" from 's3://"+bucketStructure+"/"+key+"' "
 				+ "credentials 'aws_access_key_id=AKIAJFETOLAADYA37PTQ;aws_secret_access_key=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' "
 				+ "delimiter ',' region 'us-west-2'";

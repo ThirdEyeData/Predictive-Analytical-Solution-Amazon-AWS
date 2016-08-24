@@ -48,7 +48,7 @@ public class DataMockupGenerator {
 	static final long unixTime = System.currentTimeMillis() / 1000L;
 	static AWSProjectProperties awscredentials = new AWSProjectProperties();
 	static S3Operations s3 = new S3Operations();
-	static String bucketName="";
+	static String bucketName="amazon-aws-immersion-project";
 	String companySymbol;
 
 	/**
@@ -561,10 +561,10 @@ public class DataMockupGenerator {
 		// Mysql Connection
 		Connection conn = mysql.mysqlConnect();
 		// Insert Data Into Mysql Table
-		// mysql.insertDataCompanyMaster(conn, cplist);
-		// mysql.insertDataCompanyAnnouncement(conn, calist);
-		// mysql.insertDataCompanyProduct(conn, cproList);
-        mysql.mysqlDisconnect(conn);
+		 mysql.insertDataCompanyMaster(conn, cplist);
+		 mysql.insertDataCompanyAnnouncement(conn, calist);
+		 mysql.insertDataCompanyProduct(conn, cproList);
+         mysql.mysqlDisconnect(conn);
         //Generating Stock Mockup data
 		String filePath=mockup.minMockUpData("/home/abhinandan/TE/Datasets/Project/AWS/Datasets/Mockup/Stock", startDate, endDate,
 				companyID, 35, 42, 35000, 37541, stockChanger);
