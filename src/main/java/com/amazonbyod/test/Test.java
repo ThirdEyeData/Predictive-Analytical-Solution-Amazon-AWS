@@ -41,9 +41,9 @@ public class Test {
 			
 
 			try {
-				connection = DriverManager.getConnection("jdbc:mysql://54.149.197.125:3306/immersiondb","root", "root");
+				connection = DriverManager.getConnection("jdbc:mysql://54.187.46.29:3306/immersiondb","root", "root");
 				Statement stmt = connection.createStatement();
-				ResultSet rs = stmt.executeQuery("SHOW TABLES LIKE 'company_master'");
+				ResultSet rs = stmt.executeQuery("show tables");
 				while(rs.next()){
 					System.out.println("tables name: "+rs.getString(1));
 				}

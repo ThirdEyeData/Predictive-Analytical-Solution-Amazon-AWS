@@ -86,7 +86,7 @@ public class DataMockupGenerator {
 			filePath=saveDir + "/historicalstock_" + unixTime + ".csv";
 			CSVWriter writer = new CSVWriter(new FileWriter(filePath),CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER);
 			while (!start.isAfter(end)) {
-
+            
 				if (stockChanger.contains(start.toString())) {
 					int indexVal = stockChanger.indexOf(start.toString());
 					int stockFlag = stockChanger.get(indexVal).getChangeType();
@@ -141,7 +141,7 @@ public class DataMockupGenerator {
 							}
 
 							String csvRow = companySymbol + "," + start.toString() + ","
-									+ tformater.format(dateTime.plusSeconds(i).toDate()) + "," + openStockVal + ","
+									+ start.toString()+" "+tformater.format(dateTime.plusSeconds(i).toDate()) + "," + openStockVal + ","
 									+ highStockVal + "," + lowStockVal + "," + closeStockVal + "," + stockVolume + ","
 									+ "0" + "," + "1" + "," + openStockVal + "," + highStockVal + "," + lowStockVal
 									+ "," + closeStockVal + "," + stockVolume;
@@ -189,7 +189,7 @@ public class DataMockupGenerator {
 							}
 
 							String csvRow = companySymbol + "," + start.toString() + ","
-									+ tformater.format(dateTime.plusSeconds(i).toDate()) + "," + openStockVal + ","
+									+ start.toString()+" "+tformater.format(dateTime.plusSeconds(i).toDate()) + "," + openStockVal + ","
 									+ highStockVal + "," + lowStockVal + "," + closeStockVal + "," + stockVolume + ","
 									+ "0" + "," + "1" + "," + openStockVal + "," + highStockVal + "," + lowStockVal
 									+ "," + closeStockVal + "," + stockVolume;
@@ -517,7 +517,7 @@ public class DataMockupGenerator {
 		 */
 
 		Calendar startcal = Calendar.getInstance();
-		startcal.add(Calendar.MONTH, -6);
+		startcal.add(Calendar.YEAR, -1);
 
 		String startDate = df.format(startcal.getTime());
 		String endDate = df.format(endcal.getTime());
@@ -561,13 +561,13 @@ public class DataMockupGenerator {
 		// Mysql Connection
 		Connection conn = mysql.mysqlConnect();
 		// Insert Data Into Mysql Table
-		 mysql.insertDataCompanyMaster(conn, cplist);
-		 mysql.insertDataCompanyAnnouncement(conn, calist);
-		 mysql.insertDataCompanyProduct(conn, cproList);
-         mysql.mysqlDisconnect(conn);
+		// mysql.insertDataCompanyMaster(conn, cplist);
+	    // mysql.insertDataCompanyAnnouncement(conn, calist);
+		// mysql.insertDataCompanyProduct(conn, cproList);
+        // mysql.mysqlDisconnect(conn);
         //Generating Stock Mockup data
 		String filePath=mockup.minMockUpData("/home/abhinandan/TE/Datasets/Project/AWS/Datasets/Mockup/Stock", startDate, endDate,
-				companyID, 35, 42, 35000, 37541, stockChanger);
+				companySymbol, 35, 42, 35000, 37541, stockChanger);
 		
 		String[] filePathSplit=filePath.split("/");
 		String fileName=filePathSplit[filePathSplit.length-1];

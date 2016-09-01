@@ -144,7 +144,7 @@ public class AwsRedshiftOperations {
 		String loadSQL = "copy "+tablename+" from 's3://"+bucketStructure+"/"+key+"' "
 				+ "credentials 'aws_access_key_id=AKIAJFETOLAADYA37PTQ;aws_secret_access_key=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' "
 				+ "delimiter ',' region 'us-west-2'";
-		
+		System.out.println(loadSQL);
 		try {
 			Statement stmt = conn.createStatement();
 			stmt.executeUpdate(loadSQL);
