@@ -1,61 +1,34 @@
 package com.amazonbyod.test;
 
-import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
-import com.amazonbyod.mysql.MySQLConnection;
-import com.amazonbyod.redshift.AwsRedshiftOperations;
-
-import au.com.bytecode.opencsv.CSVWriter;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.transfer.TransferManager;
+import com.amazonaws.services.s3.transfer.Upload;
+import com.amazonbyod.awsprop.AWSProjectProperties;
 
 public class Test {
 	
-	public void testing(){
-		Sample s = new Sample();
-		System.out.println(s.getSample());
-	}
 	
-	public static void main(String args[]) throws IOException{
-		 String csv = "/home/abhinandan/TE/Datasets/Project/AWS/Datasets/Mockup/Stock/data.csv";
-			System.out.println("-------- MySQL JDBC Connection Testing ------------");
-
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				System.out.println("Where is your MySQL JDBC Driver?");
-				e.printStackTrace();
-				return;
-			}
-            
-			System.out.println("MySQL JDBC Driver Registered!");
-			Connection connection = null;
-			
-			
-
-			try {
-				connection = DriverManager.getConnection("jdbc:mysql://54.187.46.29:3306/immersiondb","root", "root");
-				Statement stmt = connection.createStatement();
-				ResultSet rs = stmt.executeQuery("show tables");
-				while(rs.next()){
-					System.out.println("tables name: "+rs.getString(1));
-				}
-				
-
-			} catch (SQLException e) {
-				System.out.println("Connection Failed! Check output console");
-				e.printStackTrace();
-				
-			}
-
-			
+	public static void main(String args[]) throws IOException {
+		 AWSProjectProperties awscredentials = new AWSProjectProperties();
+		AWSCredentials credentials = new BasicAWSCredentials(awscredentials.getAccessKey(), awscredentials.getSecretKey());
+		// Each instance of TransferManager maintains its own thread pool
+		// where transfers are processed, so share an instance when possible
+		TransferManager tx = new TransferManager(credentials);
+		 
+		// The upload and download methods return immediately, while
+		// TransferManager processes the transfer in the background thread pool
+		File file= new File("Incremental_weather_data.csv");
+		Upload upload = tx.upload("", "sample.csv", file);
+		
+		 
+		// While the transfer is processing, you can work with the transfer object
+		while (upload.isDone() == false) {
+		    System.out.println(upload.getProgress().getPercentTransferred() + "%");
+		}	
 		
 	}
 }

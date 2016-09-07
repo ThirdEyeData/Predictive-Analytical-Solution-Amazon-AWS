@@ -52,7 +52,7 @@ public class Sample {
 			Sample s =new Sample();
 			sample="Hello";
 			Test t =new Test();
-			t.testing();
+			
 			
 			
 			//System.out.println(seconds);

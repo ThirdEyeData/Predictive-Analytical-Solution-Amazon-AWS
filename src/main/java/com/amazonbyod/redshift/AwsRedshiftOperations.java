@@ -96,8 +96,11 @@ public class AwsRedshiftOperations {
 	}
 
 	public void insertWeatherData(Connection conn, List<WeatherData> row) {
+		
 		String insertTableSQL = "INSERT INTO weather_data_incremental (station_code,station_name,lat ,lng ,wdate,tmax ,tmin ,windspeed ,rainfall ,snowfall ,storm,flag)"
 				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+		//Truncate Table
+		truncateTable(conn,"weather_data_incremental");
 		try {
 			PreparedStatement preparedStatement = conn.prepareStatement(insertTableSQL);
 			int flag=0;

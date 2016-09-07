@@ -559,24 +559,24 @@ public class DataMockupGenerator {
 		}
 
 		// Mysql Connection
-		Connection conn = mysql.mysqlConnect();
+		//Connection conn = mysql.mysqlConnect();
 		// Insert Data Into Mysql Table
 		// mysql.insertDataCompanyMaster(conn, cplist);
 	    // mysql.insertDataCompanyAnnouncement(conn, calist);
 		// mysql.insertDataCompanyProduct(conn, cproList);
         // mysql.mysqlDisconnect(conn);
         //Generating Stock Mockup data
-		String filePath=mockup.minMockUpData("/home/abhinandan/TE/Datasets/Project/AWS/Datasets/Mockup/Stock", startDate, endDate,
-				companySymbol, 35, 42, 35000, 37541, stockChanger);
+		//String filePath=mockup.minMockUpData("/home/abhinandan/TE/Datasets/Project/AWS/Datasets/Mockup/Stock", startDate, endDate,
+			//	companySymbol, 35, 42, 35000, 37541, stockChanger);
 		
-		String[] filePathSplit=filePath.split("/");
-		String fileName=filePathSplit[filePathSplit.length-1];
-		String s3folder="stockdata/"+fileName;
-		s3.S3Upload(s3client, bucketName, s3folder , filePath);
+		//String[] filePathSplit=filePath.split("/");
+		//String fileName=filePathSplit[filePathSplit.length-1];
+		//String s3folder="stockdata/"+fileName;
+		//s3.S3Upload(s3client, bucketName, s3folder , filePath);
 		
-		Connection redShiftConnect = redShift.redShiftConnect();
-		redShift.loadDatafromS3(redShiftConnect, "stock_datademo", bucketName+"/stockdata", fileName);
-		redShift.redShiftDisconnect(redShiftConnect);
+		//Connection redShiftConnect = redShift.redShiftConnect();
+		//redShift.loadDatafromS3(redShiftConnect, "stock_datademo", bucketName+"/stockdata", fileName);
+		//redShift.redShiftDisconnect(redShiftConnect);
 		
 		//s3.S3Upload(s3Client, existingBucketName, keyName, filePath);
 		// mockup.realtimeMockUpData("/home/abhinandan/TE/Datasets/Project/AWS/Datasets/Mockup/Stock","TED",

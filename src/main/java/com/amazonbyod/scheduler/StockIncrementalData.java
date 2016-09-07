@@ -21,7 +21,7 @@ public class StockIncrementalData implements Job{
 			JobDataMap data = context.getJobDetail().getJobDataMap();
 			String stockSymbol = data.getString("CompanySymbol"); 
 			Connection conn = redshift.redShiftConnect();
-			List<StockData> row=stockMockup.realtimeMockUpDataRedShift(stockSymbol,35, 38, 35000, 37541);
+			List<StockData> row=stockMockup.realtimeMockUpDataRedShift(stockSymbol,35, 55, 35000, 37541);
 			redshift.insertStockData(conn, row);
 			redshift.redShiftDisconnect(conn);
 		} catch (Exception e) {
