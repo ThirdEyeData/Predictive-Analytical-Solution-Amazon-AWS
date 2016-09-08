@@ -55,12 +55,12 @@ var treeData = [
        {
         "name": "Incremental Data",
         "parent": "Start",
-        "class": "kony",
+        "class": "incremental",
         "children": [
           {
             "name": "RedShift",
             "parent": "Incremental Data",
-            "class": "redshiftincri"
+            "class": "incrementalred"
           }
          ]
       }

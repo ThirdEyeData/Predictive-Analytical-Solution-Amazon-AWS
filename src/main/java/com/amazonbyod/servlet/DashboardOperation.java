@@ -31,6 +31,7 @@ import com.amazonbyod.awsprop.AWSProjectProperties;
 import com.amazonbyod.mysql.MySQLConnection;
 import com.amazonbyod.redshift.AwsRedshiftOperations;
 import com.amazonbyod.s3.S3Operations;
+import com.amazonbyod.scheduler.StreamingMockupData;
 
 /**
  * Servlet implementation class DashboardOperation
@@ -107,7 +108,16 @@ public class DashboardOperation extends HttpServlet {
 			  
 			  
 		  }else if (datatype.equals("incremental")){
-			  
+			    String Incrementaldata=buildJson("incremental","green","Start At:"+new Date());
+				out.write("data: " +Incrementaldata + "\n\n");
+			   // Initialized Quartz
+				StreamingMockupData streaming = new StreamingMockupData(companySymbol);
+				
+				String IncrementaldataStart=buildJson("incremental","green","Start At:"+new Date());
+				out.write("data: " +IncrementaldataStart + "\n\n");
+				
+				streaming.startStreaming();
+				
 		  }
 		}
 		
