@@ -7,60 +7,60 @@ var treeData = [
     "class": "start",
     "children": [
       {
-        "name": "Redshift",
+        "name": "Weather Data",
         "parent": "Start",
-        "class": "redshift",
+        "class": "weatherdata",
         "children": [
         {
-            "name": "Redshift 1",
-            "parent": "Redshift",
-            "class": "redshift1",
+            "name": "S3 Upload",
+            "parent": "Weather Data",
+            "class": "s3upload",
                     "children": [
                     {
-                    "name": "Redshift 2",
-                    "parent": "Redshift",
-                    "class": "redshift2",
-                        "children": [
-                                    {
-                                    "name": "Redshift 3",
-                                    "parent": "Redshift",
-                                    "class": "redshift3"
-                                    }
-                        ]
+                    "name": "Redshift",
+                    "parent": "Weather Data",
+                    "class": "redshift"
                     }
                     ]
         }
         ]
       },
       {
-        "name": "Mysql",
+        "name": "Mockup Data",
         "parent": "Start",
-        "class": "mysql",
+        "class": "mockup",
         "children": [
-          {
-            "name": "Mysql 1",
-            "parent": "Mysql",
-            "class": "mysql1",
+          { 
+            "name": "S3 Upload (Stock Data)",
+            "parent": "Mockup Data",
+            "class": "s3uploadmockup",
                 "children": [
                  {
-                "name": "Mysql 2",
-                "parent": "Redshift 3",
-                "class": "mysql2" 
+                "name": "RedShift",
+                "parent": "Mockup Data",
+                "class": "redshiftmockup" 
                 }
                 ]
-          }
+          },
+          { 
+              "name": "Mysql (Non Stock Data)",
+              "parent": "Mockup Data",
+              "class": "mysql"
+            }
+          
          ]
+         
 
       },
        {
-        "name": "Kony",
+        "name": "Incremental Data",
         "parent": "Start",
         "class": "kony",
         "children": [
           {
-            "name": "Kony 1",
-            "parent": "Kony",
-            "class": "kony1"
+            "name": "RedShift",
+            "parent": "Incremental Data",
+            "class": "redshiftincri"
           }
          ]
       }

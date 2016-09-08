@@ -83,7 +83,7 @@
                             <div class="panel-heading">
                             Weather Data
                             </div>
-                            <a href="#" onclick="change_color();">
+                            <a href="javascript:void(0);" >
                                 <div class="panel-footer">
                                     <button class="btn  btn-primary btn-sm" id="weatherData"> Start</button>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -177,12 +177,13 @@
 //out.print("data: " +json + "\n\n");
  
 
- if(typeof(EventSource)!=="undefined") {
+/*  if(typeof(EventSource)!=="undefined") {
      var eSource = new EventSource("http://localhost:8080/AmazonByod/DashboardOperation");
-     alert(JSON.stringify(eSource))
+     
         eSource.onmessage = function(event) {
+    	 //alert(event);
         var obj = JSON.parse(event.data);
-         alert(event)
+        
         $("path."+obj.class)
         .delay(800)
         .queue(function (next) { 
@@ -204,19 +205,19 @@
         next(); 
         });
 
-        $("text."+obj.class).attr('id',obj.status);
+        $("text."+obj.class).attr('id',obj.status); 
 
     };
 }
 else {
 document.getElementById("serverData").innerHTML="Whoops! Your browser doesn't receive server-sent events.";
-}
+}  */
 
 </script>
 
  
 
-<script>
+<!-- <script>
 
 function change_color()
 {
@@ -226,7 +227,7 @@ function change_color()
    //.style("stroke", function(d) { return d.target.level; })
 
 }
-</script>
+</script> -->
 </body>
 
 </html>

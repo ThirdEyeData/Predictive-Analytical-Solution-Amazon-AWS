@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +21,15 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonbyod.awsprop.AWSProjectProperties;
+import com.amazonbyod.mysql.MySQLConnection;
+import com.amazonbyod.redshift.AwsRedshiftOperations;
 import com.amazonbyod.s3.S3Operations;
 
 /**
@@ -45,24 +58,59 @@ public class DashboardOperation extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		//response.setContentType("application/json");
-		 response.setContentType("text/event-stream");
-		 response.setHeader("Cache-Control", "no-cache");
+		/*response.setContentType("application/json");*/
+		
+		//content type must be set to text/event-stream
+		  response.setContentType("text/event-stream"); 
+
+		  //encoding must be set to UTF-8
+		  response.setCharacterEncoding("UTF-8");
 
 		
 		PrintWriter out = response.getWriter();
-		String json = buildJson("mysql","green","3");
-		/*if(request.getParameter("datatype").toString()!="" || request.getParameter("datatype").toString()!=null){
+		
+		
+		//Mysql Connection
+		MySQLConnection mysql = new MySQLConnection();
+		//AWS Credentials 
+		AWSCredentials credentials = new BasicAWSCredentials(awscredentials.getAccessKey(), awscredentials.getSecretKey());
+	    //S3 Client
+		AmazonS3 s3client = new AmazonS3Client(credentials);
+		//Redshift 
+	    AwsRedshiftOperations redShift = new AwsRedshiftOperations();
+	    //Date format
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+		
+		DashboardOperation mockup = new DashboardOperation(); 
+
+		Calendar endcal = Calendar.getInstance();
+		endcal.add(Calendar.DATE, -1);
+		
+		Date date = new Date();
+		
+		if(request.getParameter("datatype")!=null){
 		String datatype=request.getParameter("datatype").toString();
 		System.out.println("Hello "+datatype);
-		if(datatype.equals("weather")){
-			System.out.println("Got your request");
-			sendStreamingData("mysql","green","3");
-			json=buildJson("mysql","green","3");
-		}
-		}*/
 		
-		out.println(json);
+		if(datatype.equals("weather")){
+			String weatherDataStart=buildJson("weatherdata","green","Start At:"+new Date());
+			out.write("data: " +weatherDataStart + "\n\n");
+			
+			
+			String s3folder="weatherdata/weatherdata.csv";
+			s3client.setRegion(Region.getRegion(Regions.US_WEST_2));
+			s3.S3Upload(s3client, bucketName+"/weatherdata", s3folder, "/home/abhinandan/TE/Datasets/Project/AWS/Datasets/Weather/weather_data_updated.csv");
+			
+			String S3weatherdataUpload=buildJson("s3upload","green","Start At:"+new Date());
+			out.write("data: " +S3weatherdataUpload + "\n\n");
+		  }else if(datatype.equals("mockup")){
+			  
+			  
+		  }else if (datatype.equals("incremental")){
+			  
+		  }
+		}
+		
 	}
 
 	/**

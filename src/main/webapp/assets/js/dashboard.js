@@ -1,14 +1,34 @@
 //Click on Ready
 $( document ).ready(function() {
-	
+	static var d =  new Date().toLocaleString();
+	var startProcess='{"class":"start","color":"green","status":"Process Start At: '+d+'"}';
 	//Generate MockUp Data
 	$( "#mockupdata" ).click(function() {
-		  alert( "Handler for .click() called1." );
+		showTree(JSON.parse(startProcess))
+		  
+		  $.ajax({
+				url : "./DashboardOperation",
+				type : "POST",
+				data : {
+			        datatype: "mockup"
+			    },
+				dataType : 'json',
+				success : function(data) {
+					//alert(JSON.stringify(data))
+					showTree(data)
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+					alert("ERROR:" + xhr.responseText + " - " + thrownError);
+				}
+
+			});
+		  
+		  showBar("MockUp Data Loading Started")
 		});
 	
 	//Generate Weather Data
 	$( "#weatherData" ).click(function() {
-		  alert( "Handler for .click() called2." );
+		showTree(JSON.parse(startProcess))
 		  
 		  $.ajax({
 				url : "./DashboardOperation",
@@ -18,7 +38,8 @@ $( document ).ready(function() {
 			    },
 				dataType : 'json',
 				success : function(data) {
-					alert(JSON.stringify(data))
+					//alert(JSON.stringify(data))
+					showTree(data)
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					alert("ERROR:" + xhr.responseText + " - " + thrownError);
@@ -32,7 +53,27 @@ $( document ).ready(function() {
 	
 	//Generate Increment Data
 	$( "#incrementalData" ).click(function() {
-		  alert( "Handler for .click() called3." );
+		showTree(JSON.parse(startProcess))
+		  
+		  $.ajax({
+				url : "./DashboardOperation",
+				type : "POST",
+				data : {
+			        datatype: "incremental"
+			    },
+				dataType : 'json',
+				success : function(data) {
+					//alert(JSON.stringify(data))
+					showTree(data)
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+					alert("ERROR:" + xhr.responseText + " - " + thrownError);
+				}
+
+			});
+		  
+		  showBar("Incremental Data Loading Started")
+		  
 		});
 	
 	
@@ -42,6 +83,57 @@ $( document ).ready(function() {
 		 $("#progressmsg").html(messgae);
 	}
 	
+	function showTree(obj){
+		
+		alert(JSON.stringify(obj))
+		
+		$("path."+obj.class)
+        .delay(800)
+        .queue(function (next) { 
+        $(this).css('stroke', obj.color); 
+        next(); 
+        });
+
+        $("circle."+obj.class)
+        .delay(1000)
+        .queue(function (next) { 
+        $(this).css('stroke', 'black'); 
+        next(); 
+        });
+
+        $("circle."+obj.class)
+        .delay(1200)
+        .queue(function (next) { 
+        $(this).css('fill', obj.color); 
+        next(); 
+        });
+
+        $("text."+obj.class).attr('id',obj.status);
+		
+	}
+	
 	//Hide
 	$("#messageBox").hide();
 });
+
+
+
+function ajaxCall(dataTypeValue){
+	$.ajax({
+		url : "./DashboardOperation",
+		type : "POST",
+		data : {
+	        datatype: dataTypeValue
+	    },
+		dataType : 'json',
+		success : function(data) {
+			//alert(JSON.stringify(data))
+			showTree(data)
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+			alert("ERROR:" + xhr.responseText + " - " + thrownError);
+		}
+
+	});
+}
+
