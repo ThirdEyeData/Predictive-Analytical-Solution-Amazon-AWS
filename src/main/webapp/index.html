@@ -68,11 +68,11 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row" id="messageBox">
                     <div class="col-lg-12">
-                        <div class="alert alert-info alert-dismissable">
+                        <div class="alert alert-info alert-dismissable" >
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <i class="fa fa-info-circle"></i>  <strong>Download CSV</strong> for additional features!
+                            <i class="fa fa-info-circle"></i>  <span id="progressmsg"></span>
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                             </div>
                             <a href="#" onclick="change_color();">
                                 <div class="panel-footer">
-                                    <button class="btn  btn-primary btn-sm" > Start</button>
+                                    <button class="btn  btn-primary btn-sm" id="weatherData"> Start</button>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                     <div class="clearfix"></div>
                                 </div>
@@ -125,7 +125,7 @@
                             </div>
                             <a href="#">
                                 <div class="panel-footer">
-                                    <button class="btn   btn-danger btn-sm"> Start</button>
+                                    <button class="btn   btn-danger btn-sm" id="incrementalData"> Start</button>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                     <div class="clearfix"></div>
                                 </div>
@@ -138,7 +138,7 @@
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Downloading section</h3>
+                                <h3 class="panel-title">Data Flow</h3>
                             </div>
                             <div class="panel-body">
                                 <div id="tree"></div>
@@ -176,13 +176,13 @@
 //String json = "{\"class\":\"mysql\",\"color\":\"green\",\"status\":3}";
 //out.print("data: " +json + "\n\n");
  
-/*
+
  if(typeof(EventSource)!=="undefined") {
-     var eSource = new EventSource("http://localhost:8080/AWSWebAPI/RedShiftWebSevices");
-    
+     var eSource = new EventSource("http://localhost:8080/AmazonByod/DashboardOperation");
+     alert(JSON.stringify(eSource))
         eSource.onmessage = function(event) {
         var obj = JSON.parse(event.data);
-         
+         alert(event)
         $("path."+obj.class)
         .delay(800)
         .queue(function (next) { 
@@ -211,7 +211,7 @@
 else {
 document.getElementById("serverData").innerHTML="Whoops! Your browser doesn't receive server-sent events.";
 }
-*/
+
 </script>
 
  
