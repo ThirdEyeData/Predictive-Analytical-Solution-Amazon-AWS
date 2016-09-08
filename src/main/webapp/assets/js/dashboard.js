@@ -1,6 +1,6 @@
 //Click on Ready
 $( document ).ready(function() {
-	static var d =  new Date().toLocaleString();
+	 var d =  new Date().toLocaleString();
 	var startProcess='{"class":"start","color":"green","status":"Process Start At: '+d+'"}';
 	//Generate MockUp Data
 	$( "#mockupdata" ).click(function() {
@@ -36,10 +36,11 @@ $( document ).ready(function() {
 				data : {
 			        datatype: "weather"
 			    },
-				dataType : 'json',
 				success : function(data) {
-					//alert(JSON.stringify(data))
-					showTree(data)
+					var dataSplit=data.split("---");
+					showTree(JSON.parse(dataSplit[0]))
+					showTree(JSON.parse(dataSplit[1]))
+					//showTree(JSON.parse(data))
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					alert("ERROR:" + xhr.responseText + " - " + thrownError);
@@ -61,10 +62,11 @@ $( document ).ready(function() {
 				data : {
 			        datatype: "incremental"
 			    },
-				dataType : 'json',
 				success : function(data) {
 					//alert(JSON.stringify(data))
-					showTree(data)
+					var dataSplit=data.split("---");
+					showTree(JSON.parse(dataSplit[0]))
+					showTree(JSON.parse(dataSplit[1]))
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					alert("ERROR:" + xhr.responseText + " - " + thrownError);
@@ -85,7 +87,7 @@ $( document ).ready(function() {
 	
 	function showTree(obj){
 		
-		alert(JSON.stringify(obj))
+		//alert(JSON.stringify(obj))
 		
 		$("path."+obj.class)
         .delay(800)

@@ -5,10 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
+import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.ServletException;
@@ -28,6 +31,11 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonbyod.awsprop.AWSProjectProperties;
+import com.amazonbyod.listclass.CompanyProducts;
+import com.amazonbyod.listclass.CompanyProfile;
+import com.amazonbyod.listclass.Companyannouncements;
+import com.amazonbyod.listclass.StockChanger;
+import com.amazonbyod.mockupdata.DataMockupGenerator;
 import com.amazonbyod.mysql.MySQLConnection;
 import com.amazonbyod.redshift.AwsRedshiftOperations;
 import com.amazonbyod.s3.S3Operations;
@@ -82,10 +90,19 @@ public class DashboardOperation extends HttpServlet {
 	    //Date format
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 		
-		DashboardOperation mockup = new DashboardOperation(); 
+		DataMockupGenerator mockup = new DataMockupGenerator(); 
 
 		Calendar endcal = Calendar.getInstance();
 		endcal.add(Calendar.DATE, -1);
+		
+		Calendar startcal = Calendar.getInstance();
+		startcal.add(Calendar.YEAR, -1);
+
+		String startDate = df.format(startcal.getTime());
+		String endDate = df.format(endcal.getTime());
+
+		Date startDt = startcal.getTime();
+		Date endDt = endcal.getTime();
 		
 		Date date = new Date();
 		
@@ -94,29 +111,70 @@ public class DashboardOperation extends HttpServlet {
 		System.out.println("Hello "+datatype);
 		
 		if(datatype.equals("weather")){
-			String weatherDataStart=buildJson("weatherdata","green","Start At:"+new Date());
-			out.write("data: " +weatherDataStart + "\n\n");
+			//String weatherDataStart=buildJson("weatherdata","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
+			//out.write(weatherDataStart);
 			
 			
 			String s3folder="weatherdata/weatherdata.csv";
 			s3client.setRegion(Region.getRegion(Regions.US_WEST_2));
 			s3.S3Upload(s3client, bucketName+"/weatherdata", s3folder, "/home/abhinandan/TE/Datasets/Project/AWS/Datasets/Weather/weather_data_updated.csv");
 			
-			String S3weatherdataUpload=buildJson("s3upload","green","Start At:"+new Date());
-			out.write("data: " +S3weatherdataUpload + "\n\n");
+			String S3weatherdataUpload=buildJson("weatherdata","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
+			String redshiftweather = buildJson("redshift","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
+			out.write(S3weatherdataUpload+"---"+redshiftweather);
+			
+			
+			
+			
 		  }else if(datatype.equals("mockup")){
+			  String weatherDataStart=buildJson("weatherdata","green","Start At:"+new Date());
+			  Connection conn = mysql.mysqlConnect();
+				
+				// Generate Company Profile
+				List<CompanyProfile> cplist = mockup.createCompanyProfile();
+				String companyID = cplist.get(0).getCompanyId();
+				companySymbol = cplist.get(0).getCompanySymbol();
+
+				
+
+				mockup.setCompanySymbol(companySymbol);
+				// Generate Company Products
+				List<CompanyProducts> cproList = mockup.createCompanyProduct(companyID, startDt, endDt);
+				// Generate Company announcement
+				List<Companyannouncements> calist = mockup.createCompanyannouncements(companyID, startDt, endDt);
+
+				List<StockChanger> stockChanger = new ArrayList<StockChanger>();
+
+				// Get all Events Date
+				for (int i = 0; i < cproList.size(); i++) {
+					StockChanger sc = new StockChanger(df.format(cproList.get(i).getProduct_initaldate()), 1);
+					stockChanger.add(sc);
+				}
+
+				for (int i = 0; i < calist.size(); i++) {
+					int flag = 0;
+					if (calist.get(i).getAnnouncemnType() == "Product Lunch"
+							|| calist.get(i).getAnnouncemnType() == "Revenue Increased") {
+						flag = 1;
+					}
+					StockChanger sc = new StockChanger(df.format(calist.get(i).getAnnouncementDate()), flag);
+					stockChanger.add(sc);
+				}
+			  
+				
+			  
 			  
 			  
 		  }else if (datatype.equals("incremental")){
-			    String Incrementaldata=buildJson("incremental","green","Start At:"+new Date());
-				out.write("data: " +Incrementaldata + "\n\n");
+			    String Incrementaldata=buildJson("incremental","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
 			   // Initialized Quartz
 				StreamingMockupData streaming = new StreamingMockupData(companySymbol);
 				
-				String IncrementaldataStart=buildJson("incremental","green","Start At:"+new Date());
-				out.write("data: " +IncrementaldataStart + "\n\n");
 				
+		
 				streaming.startStreaming();
+				String IncrementaldataStart=buildJson("incrementalred","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
+				out.write(Incrementaldata+"---"+IncrementaldataStart);
 				
 		  }
 		}
@@ -136,43 +194,6 @@ public class DashboardOperation extends HttpServlet {
 		return json;
 	}
 	
-   public void sendStreamingData(String classname,String color,String status) {
-		
-		try {
-			
-			String json = "{\"class\":\""+classname+"\",\"color\":\""+color+"\",\"status\":\""+status+"\"}";
-			@SuppressWarnings("resource")
-			DefaultHttpClient httpClient = new DefaultHttpClient();
-			HttpPost postRequest = new HttpPost("http://localhost:8080/AmazonByod/Dashboard");
-				
 
-			StringEntity input = new StringEntity(json);
-			input.setContentType("application/json");
-			postRequest.setEntity(input);
-
-			HttpResponse response = httpClient.execute(postRequest);
-
-			BufferedReader br = new BufferedReader(
-	                        new InputStreamReader((response.getEntity().getContent())));
-
-			String output;
-			//System.out.println("Output from Server .... \n");
-			while ((output = br.readLine()) != null) {
-				System.out.println("REST API JSON DATA: "+output);
-			}
-
-			httpClient.getConnectionManager().shutdown();
-
-		  } catch (MalformedURLException e) {
-
-			e.printStackTrace();
-		
-		  } catch (IOException e) {
-
-			e.printStackTrace();
-
-		  }
-
-	}
 
 }
