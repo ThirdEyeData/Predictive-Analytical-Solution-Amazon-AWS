@@ -50,7 +50,7 @@ public class DashboardOperation extends HttpServlet {
 	static AWSProjectProperties awscredentials = new AWSProjectProperties();
 	static S3Operations s3 = new S3Operations();
 	static String bucketName="amazon-aws-immersion-project";
-	String companySymbol;
+	String companySymbol="";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -127,7 +127,7 @@ public class DashboardOperation extends HttpServlet {
 			
 			
 		  }else if(datatype.equals("mockup")){
-			  String weatherDataStart=buildJson("weatherdata","green","Start At:"+new Date());
+			  String weatherDataStart=buildJson("mockup","green","Start At:"+new Date());
 			  Connection conn = mysql.mysqlConnect();
 				
 				// Generate Company Profile
@@ -161,8 +161,13 @@ public class DashboardOperation extends HttpServlet {
 					stockChanger.add(sc);
 				}
 			  
-				
-			  
+				// Insert Data Into Mysql Table
+				 mysql.insertDataCompanyMaster(conn, cplist);
+			     mysql.insertDataCompanyAnnouncement(conn, calist);
+				 mysql.insertDataCompanyProduct(conn, cproList);
+		         mysql.mysqlDisconnect(conn);
+		     String mysqlstatus=buildJson("mysql","green","<p style='color:green'>Successfully Completed</p> On:"+new Date()); 
+			out.write(weatherDataStart+"---"+mysqlstatus);
 			  
 			  
 		  }else if (datatype.equals("incremental")){
