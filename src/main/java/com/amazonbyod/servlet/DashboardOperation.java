@@ -166,8 +166,10 @@ public class DashboardOperation extends HttpServlet {
 			     mysql.insertDataCompanyAnnouncement(conn, calist);
 				 mysql.insertDataCompanyProduct(conn, cproList);
 		         mysql.mysqlDisconnect(conn);
-		     String mysqlstatus=buildJson("mysql","green","<p style='color:green'>Successfully Completed</p> On:"+new Date()); 
-			out.write(weatherDataStart+"---"+mysqlstatus);
+		         String mysqlstatus=buildJson("mysql","green","<p style='color:green'>Successfully Completed</p> On:"+new Date()); 
+		         String s3uplaod=buildJson("s3uploadmockup","green","<p style='color:green'>Successfully Completed</p> On:"+new Date()); 
+		         String redshiftload=buildJson("redshiftmockup","green","<p style='color:green'>Successfully Completed</p> On:"+new Date()); 
+			      out.write(weatherDataStart+"---"+mysqlstatus+"---"+s3uplaod+"---"+redshiftload);
 			  
 			  
 		  }else if (datatype.equals("incremental")){
