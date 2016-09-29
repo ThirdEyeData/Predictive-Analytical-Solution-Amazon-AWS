@@ -22,6 +22,12 @@
   	<description></description>
   	<servlet-class>com.amazonbyod.servlet.DashboardOperation</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>EditProperties</servlet-name>
+  	<display-name>EditProperties</display-name>
+  	<description></description>
+  	<servlet-class>com.amazonbyod.servlet.EditProperties</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>RedShiftWebServices</servlet-name>
   	<url-pattern>/RedShiftWebServices</url-pattern>
@@ -33,5 +39,9 @@
   <servlet-mapping>
   	<servlet-name>DashboardOperation</servlet-name>
   	<url-pattern>/DashboardOperation</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>EditProperties</servlet-name>
+  	<url-pattern>/EditProperties</url-pattern>
   </servlet-mapping>
 </web-app>

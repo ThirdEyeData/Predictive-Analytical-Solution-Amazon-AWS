@@ -179,7 +179,10 @@ $( document ).ready(function() {
 	$('#nonstockDataBtn').prop('disabled', true);
 	
 	//Setting page
-	
+	$("#setting").click(function() {
+		
+		$('#settingmodal').modal();
+	});
 	
 });
 
