@@ -39,7 +39,14 @@ var treeData = [
           { 
               "name": "Mysql (Company Data)",
               "parent": "Mockup Data",
-              "class": "mysql"
+              "class": "mysql",
+              "children": [
+                           	{
+                           		"name": "RedShift",
+                                "parent": "Mysql (Company Data)",
+                                "class": "cloudbeamredshift",
+                           	}
+                           ]
             }
           
          ]

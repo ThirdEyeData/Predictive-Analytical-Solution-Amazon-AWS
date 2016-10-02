@@ -8,8 +8,10 @@ import java.util.Properties;
  * @author abhinandan
  *
  */
+
 public class AWSProjectProperties {
 
+	
 	private final String accessKey = "accessKey";
 	private final String secretKey = "secretKey";
 	private final String mysql_dbname = "mysql_dbname";
@@ -17,6 +19,12 @@ public class AWSProjectProperties {
 	private final String mysql_password = "mysql_password";
 	private final String mysql_JDBC_DRIVER = "mysql_JDBC_DRIVER";
 	private final String mysql_DB_URL = "mysql_DB_URL";
+	private final String redshift_jdbc_url = "redshift_jdbc_url";
+	private final String master_username = "master_username";
+	private final String master_password = "master_password";
+	private final String stockDatapath = "stockDatapath";
+	private final String cloudbeam_slave_url = "cloudbeam_slave_url";
+
 
 	static Properties prop = new Properties();
 	static InputStream input = Thread.currentThread().getContextClassLoader()
@@ -83,6 +91,53 @@ public class AWSProjectProperties {
 	public String getMysql_DB_URL() throws IOException {
 		prop.load(input);
 		return prop.getProperty(mysql_DB_URL);
+	}
+	
+
+	/**
+	 * @return
+	 * @throws IOException
+	 */
+	public String getRedshift_jdbc_url() throws IOException {
+		prop.load(input);
+		return prop.getProperty(redshift_jdbc_url);
+	}
+
+	
+	/**
+	 * @return
+	 * @throws IOException
+	 */
+	public String getMaster_username() throws IOException {
+		prop.load(input);
+		return prop.getProperty(master_username);
+	}
+	
+	/**
+	 * @return
+	 * @throws IOException
+	 */	
+	public String getMaster_password() throws IOException {
+		prop.load(input);
+		return prop.getProperty(master_password);
+	}
+	
+	/**
+	 * @return
+	 * @throws IOException
+	 */
+	public String getStockDatapath() throws IOException {
+		prop.load(input);
+		return prop.getProperty(stockDatapath);
+	}
+    
+	/**
+	 * @return
+	 * @throws IOException
+	 */
+	public String getCloudbeam_slave_url() throws IOException {
+		prop.load(input);
+		return prop.getProperty(cloudbeam_slave_url);
 	}
 
 

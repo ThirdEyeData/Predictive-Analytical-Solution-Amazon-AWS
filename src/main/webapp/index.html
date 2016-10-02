@@ -402,17 +402,22 @@ function change_color()
                   <div class="form-group">
                     <label for="exampleInputEmail1">S3 Access Key</label>
                       <input type="text" class="form-control"
-                      id="accesskey" name="accesskey" placeholder="S3 Access Key"/>
+                      id="awsaccesskey" name="accesskey" placeholder="S3 Access Key"/>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">S3 Secret Key</label>
                       <input type="text" class="form-control"
-                          id="secretkey" name="secretkey" placeholder="S3 Secret Key"/>
+                          id="awssecretkey" name="secretkey" placeholder="S3 Secret Key"/>
                   </div>
                    <div class="form-group">
                     <label for="exampleInputPassword1">Bucket Name</label>
                       <input type="text" class="form-control"
                           id="bucketname" name="bucketname" placeholder="Bucket Name"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Stock Data Path</label>
+                      <input type="text" class="form-control"
+                          id="stockdatapath" name="stockdatapathvalue" placeholder="Stock Data Path"/>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">RedShift JDBC URL</label>
@@ -448,6 +453,18 @@ function change_color()
                     <label for="exampleInputPassword1">Mysql JDBC URL</label>
                       <input type="text" class="form-control"
                           id="mysqljdbcurl" name="mysqljdbcurl" placeholder="Mysql JDBC URL"/>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Mysql JDBC CLASS NAME</label>
+                      <input type="text" class="form-control"
+                          id="jdbcclass" name="mysqljdbcclass" placeholder="Mysql JDBC URL"/>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">CloudBeam Automation URL</label>
+                      <input type="text" class="form-control"
+                          id="cloudbeam_url" name="cloudbeam_auto_url" placeholder="CloudBeam Automation URL"/>
                   </div>
                   <button type="submit" class="btn btn-default">Submit</button>
                 </form>

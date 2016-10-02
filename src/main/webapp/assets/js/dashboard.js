@@ -181,7 +181,35 @@ $( document ).ready(function() {
 	//Setting page
 	$("#setting").click(function() {
 		
-		$('#settingmodal').modal();
+		 $.ajax({
+				url : "./EditProperties",
+				success : function(data) {
+					
+					$("#settingconfigfrom").trigger("reset");
+					
+					$("#awsaccesskey").val(data.projectProp.accessKey);
+					$("#awssecretkey").val(data.projectProp.secretKey);
+					$("#bucketname").val(data.projectProp.accessKey);
+					$("#redshiftjdbcurl").val(data.projectProp.redshift_jdbc_url);
+					$("#redshiftusername").val(data.projectProp.master_username);
+					$("#redshiftuserpassword").val(data.projectProp.master_password);
+					$("#mysqldbname").val(data.projectProp.mysql_dbname);
+					$("#mysqlusername").val(data.projectProp.mysql_username);
+					$("#mysqlpassword").val(data.projectProp.mysql_password);
+					$("#mysqljdbcurl").val(data.projectProp.mysql_DB_URL);
+					$("#jdbcclass").val(data.projectProp.mysql_JDBC_DRIVER);
+					$("#stockdatapath").val(data.projectProp.stockDatapath);
+					$("#cloudbeam_url").val(data.projectProp.cloudbeamurl);
+					
+					$('#settingmodal').modal();
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+					alert("ERROR:" + xhr.responseText + " - " + thrownError);
+				}
+
+			});
+		
+		//$('#settingmodal').modal();
 	});
 	
 });
