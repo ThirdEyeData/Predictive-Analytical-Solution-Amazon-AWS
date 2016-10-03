@@ -40,6 +40,7 @@ public class EditProperties extends HttpServlet {
 		
 		String accessKey = prop.getAccessKey();
 		String secretKey = prop.getSecretKey();
+		String bucketName = prop.getBucketName();
 		String redshift_jdbc_url = prop.getRedshift_jdbc_url();
 		String master_username = prop.getMaster_username();
 		String master_password = prop.getMaster_password();
@@ -50,11 +51,13 @@ public class EditProperties extends HttpServlet {
 		String mysql_DB_URL = prop.getMysql_DB_URL();
 		String stockDatapath = prop.getStockDatapath();
 		String cloudbeamurl = prop.getCloudbeam_slave_url();
+		String cloudbeam_taskname = prop.getCloudbeam_taskname();
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 		
 		map.put("accessKey", accessKey);
 		map.put("secretKey", secretKey);
+		map.put("bucketName", bucketName);
 		map.put("redshift_jdbc_url", redshift_jdbc_url);
 		map.put("master_username", master_username);
 		map.put("master_password", master_password);
@@ -65,6 +68,7 @@ public class EditProperties extends HttpServlet {
 		map.put("mysql_DB_URL", mysql_DB_URL);
 		map.put("stockDatapath", stockDatapath);
 		map.put("cloudbeamurl", cloudbeamurl);
+		map.put("cloudbeam_taskname", cloudbeam_taskname);
 		
 		
 		JSONObject obj = new JSONObject();
@@ -83,7 +87,37 @@ public class EditProperties extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		//doGet(request, response);
+		
+		String accessKey = request.getParameter("accesskey");
+		String secretKey = request.getParameter("secretkey");
+		String bucketName = request.getParameter("bucketname");
+		String redshift_jdbc_url = request.getParameter("redshiftjdbcurl");
+		String master_username = request.getParameter("redshiftusername");
+		String master_password = request.getParameter("redshiftuserpassword");
+		String mysql_dbname = request.getParameter("mysqldbname");
+		String mysql_username = request.getParameter("mysqlusername");
+		String mysql_password = request.getParameter("mysqlpassword");
+		String mysql_JDBC_DRIVER = request.getParameter("mysqljdbcclass");
+		String mysql_DB_URL = request.getParameter("mysqljdbcurl");
+		String stockDatapath = request.getParameter("stockdatapathvalue");
+		String cloudbeamurl = request.getParameter("cloudbeam_auto_url");
+		String cloudbeam_taskname = request.getParameter("cloudbeamtaskname");
+		
+		prop.setAccessKey(accessKey);
+		prop.setSecretKey(secretKey);
+		prop.setBucketName(bucketName);
+		prop.setRedshift_jdbc_url(redshift_jdbc_url);
+		prop.setMaster_username(master_username);
+		prop.setMaster_password(master_password);
+		prop.setMysql_dbname(mysql_dbname);
+		prop.setMysql_username(mysql_username);
+		prop.setMysql_password(mysql_password);
+		prop.setMysql_JDBC_DRIVER(mysql_JDBC_DRIVER);
+		prop.setMysql_DB_URL(mysql_DB_URL);
+		prop.setStockDatapath(stockDatapath);
+		prop.setCloudbeam_slave_url(cloudbeamurl);
+		prop.setCloudbeam_taskname(cloudbeam_taskname);
 	}
 
 }

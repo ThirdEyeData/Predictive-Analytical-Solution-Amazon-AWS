@@ -12,18 +12,20 @@ import java.util.Properties;
 public class AWSProjectProperties {
 
 	
-	private final String accessKey = "accessKey";
-	private final String secretKey = "secretKey";
-	private final String mysql_dbname = "mysql_dbname";
-	private final String mysql_username = "mysql_username";
-	private final String mysql_password = "mysql_password";
-	private final String mysql_JDBC_DRIVER = "mysql_JDBC_DRIVER";
-	private final String mysql_DB_URL = "mysql_DB_URL";
-	private final String redshift_jdbc_url = "redshift_jdbc_url";
-	private final String master_username = "master_username";
-	private final String master_password = "master_password";
-	private final String stockDatapath = "stockDatapath";
-	private final String cloudbeam_slave_url = "cloudbeam_slave_url";
+	private String accessKey = "accessKey";
+	private String secretKey = "secretKey";
+	private String bucketName = "bucketName";
+	private String mysql_dbname = "mysql_dbname";
+	private String mysql_username = "mysql_username";
+	private String mysql_password = "mysql_password";
+	private String mysql_JDBC_DRIVER = "mysql_JDBC_DRIVER";
+	private String mysql_DB_URL = "mysql_DB_URL";
+	private String redshift_jdbc_url = "redshift_jdbc_url";
+	private String master_username = "master_username";
+	private String master_password = "master_password";
+	private String stockDatapath = "stockDatapath";
+	private String cloudbeam_slave_url = "cloudbeam_slave_url";
+	private String cloudbeam_taskname = "cloudbeam_taskname";
 
 
 	static Properties prop = new Properties();
@@ -139,7 +141,87 @@ public class AWSProjectProperties {
 		prop.load(input);
 		return prop.getProperty(cloudbeam_slave_url);
 	}
+	
+	/**
+	 * @return
+	 * @throws IOException
+	 */
+	public String getBucketName() throws IOException {
+		prop.load(input);
+		return prop.getProperty(bucketName);
+	}
+	
+	/**
+	 * @return
+	 * @throws IOException
+	 */
+	public String getCloudbeam_taskname() throws IOException {
+		prop.load(input);
+		return prop.getProperty(cloudbeam_taskname);
+	}
 
+    
+	/*
+	 * Setter Part Starts Here
+	 * */
+	
+	public void setAccessKey(String accessKey) throws IOException {
+		prop.load(input);
+		prop.setProperty("accessKey", accessKey);
+	}
+	public void setSecretKey(String secretKey) throws IOException {
+		prop.load(input);
+		prop.setProperty("secretKey", secretKey);
+	}
+	public void setBucketName(String bucketName) throws IOException {
+		prop.load(input);
+		prop.setProperty("bucketName", bucketName);
+	}
+	public void setMysql_dbname(String mysql_dbname) throws IOException {
+		prop.load(input);
+		prop.setProperty("mysql_dbname", mysql_dbname);
+	}
+	public void setMysql_username(String mysql_username) throws IOException {
+		prop.load(input);
+		prop.setProperty("mysql_username", mysql_username);
+	}
+	public void setMysql_password(String mysql_password) throws IOException {
+		prop.load(input);
+		prop.setProperty("mysql_password", mysql_password);
+	}
+	public void setMysql_JDBC_DRIVER(String mysql_JDBC_DRIVER) throws IOException {
+		prop.load(input);
+		prop.setProperty("mysql_JDBC_DRIVER", mysql_JDBC_DRIVER);
+	}
+	public void setMysql_DB_URL(String mysql_DB_URL) throws IOException {
+		prop.load(input);
+		prop.setProperty("mysql_DB_URL", mysql_DB_URL);
+	}
+	public void setRedshift_jdbc_url(String redshift_jdbc_url) throws IOException {
+		prop.load(input);
+		prop.setProperty("redshift_jdbc_url", redshift_jdbc_url);
+	}
+	public void setMaster_username(String master_username) throws IOException {
+		prop.load(input);
+		prop.setProperty("master_username", master_username);
+	}
+	public void setMaster_password(String master_password) throws IOException {
+		prop.load(input);
+		prop.setProperty("master_password", master_password);
+	}
+	public void setStockDatapath(String stockDatapath) throws IOException {
+		prop.load(input);
+		prop.setProperty("stockDatapath", stockDatapath);
+	}
+	public void setCloudbeam_slave_url(String cloudbeam_slave_url) throws IOException {
+		prop.load(input);
+		prop.setProperty("cloudbeam_slave_url", cloudbeam_slave_url);
+	}
+	
+	public void setCloudbeam_taskname(String cloudbeam_taskname) throws IOException {
+		prop.load(input);
+		prop.setProperty("cloudbeam_taskname", cloudbeam_taskname);
+	}
 
 	/*
 	 * public static void main(String args[]) throws IOException{

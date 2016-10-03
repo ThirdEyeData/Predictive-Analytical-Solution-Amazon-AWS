@@ -1,10 +1,7 @@
 package com.amazonbyod.servlet;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.MalformedURLException;
 import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -19,10 +16,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -183,6 +183,21 @@ public class DashboardOperation extends HttpServlet {
 				String IncrementaldataStart=buildJson("incrementalred","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
 				out.write(Incrementaldata+"---"+IncrementaldataStart);
 				
+		  }else if(datatype.equals("cloudbeam")){
+			  
+			  String cloudbeamtask=buildJson("mysql","green","Start At:"+new Date());
+			  String url = awscredentials.getCloudbeam_slave_url();
+			  String taskname = awscredentials.getCloudbeam_taskname();
+			  CloseableHttpClient client = HttpClients.createDefault();
+			  HttpPost httpPost = new HttpPost(url);
+			  List<NameValuePair> params = new ArrayList<NameValuePair>();
+			  params.add(new BasicNameValuePair("taskname", taskname));
+			  httpPost.setEntity(new UrlEncodedFormEntity(params));
+			  CloseableHttpResponse httpresponse = client.execute(httpPost);
+			  System.out.println(httpresponse.getStatusLine().getStatusCode());
+			  String cloudbeamtaskstatus=buildJson("cloudbeamredshift","green","Start At:"+new Date());
+			  client.close();
+			  out.write(cloudbeamtask+"---"+cloudbeamtaskstatus);
 		  }
 		}
 		

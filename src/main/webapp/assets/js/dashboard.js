@@ -83,6 +83,33 @@ $( document ).ready(function() {
 		});
 	
 	
+	//CloudBeam Automation Data
+	$( "#nonstockDataBtn" ).click(function() {
+		showTree(JSON.parse(startProcess))
+		  
+		  $.ajax({
+				url : "./DashboardOperation",
+				type : "POST",
+				data : {
+			        datatype: "cloudbeam"
+			    },
+				success : function(data) {
+					var dataSplit=data.split("---");
+					showTree(JSON.parse(dataSplit[0]))
+					showTree(JSON.parse(dataSplit[1]))
+					//showTree(JSON.parse(data))
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+					alert("ERROR:" + xhr.responseText + " - " + thrownError);
+				}
+
+			});
+		  
+		  showBar("Weather Data Loading Started")
+		 
+		});
+	
+	
 	function showBar(messgae){
 		 $("#messageBox").show();
 		 $("#progressmsg").html('');
@@ -176,7 +203,7 @@ $( document ).ready(function() {
 		
 	});
 	
-	$('#nonstockDataBtn').prop('disabled', true);
+	//$('#nonstockDataBtn').prop('disabled', true);
 	
 	//Setting page
 	$("#setting").click(function() {
@@ -189,7 +216,7 @@ $( document ).ready(function() {
 					
 					$("#awsaccesskey").val(data.projectProp.accessKey);
 					$("#awssecretkey").val(data.projectProp.secretKey);
-					$("#bucketname").val(data.projectProp.accessKey);
+					$("#bucketname").val(data.projectProp.bucketName);
 					$("#redshiftjdbcurl").val(data.projectProp.redshift_jdbc_url);
 					$("#redshiftusername").val(data.projectProp.master_username);
 					$("#redshiftuserpassword").val(data.projectProp.master_password);
@@ -200,6 +227,7 @@ $( document ).ready(function() {
 					$("#jdbcclass").val(data.projectProp.mysql_JDBC_DRIVER);
 					$("#stockdatapath").val(data.projectProp.stockDatapath);
 					$("#cloudbeam_url").val(data.projectProp.cloudbeamurl);
+					$("#cbtaskname").val(data.projectProp.cloudbeam_taskname);
 					
 					$('#settingmodal').modal();
 				},
@@ -211,6 +239,28 @@ $( document ).ready(function() {
 		
 		//$('#settingmodal').modal();
 	});
+	
+	
+	//Submit the form
+	
+	$("#changeconfsetting").click(function() {
+		
+		$.ajax({
+			url : "./DashboardOperation",
+			type : "POST",
+			data : $("settingconfigfrom").serialize(),
+			success : function(data) {
+				//alert(JSON.stringify(data))
+				showTree(data)
+			},
+			error : function(xhr, ajaxOptions, thrownError) {
+				alert("ERROR:" + xhr.responseText + " - " + thrownError);
+			}
+
+		});
+		
+	});
+	
 	
 });
 

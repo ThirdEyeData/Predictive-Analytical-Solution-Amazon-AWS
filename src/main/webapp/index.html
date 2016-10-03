@@ -402,71 +402,77 @@ function change_color()
                   <div class="form-group">
                     <label for="exampleInputEmail1">S3 Access Key</label>
                       <input type="text" class="form-control"
-                      id="awsaccesskey" name="accesskey" placeholder="S3 Access Key"/>
+                      id="awsaccesskey" name="accesskey" required placeholder="S3 Access Key"/>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">S3 Secret Key</label>
                       <input type="text" class="form-control"
-                          id="awssecretkey" name="secretkey" placeholder="S3 Secret Key"/>
+                          id="awssecretkey" name="secretkey" required placeholder="S3 Secret Key"/>
                   </div>
                    <div class="form-group">
                     <label for="exampleInputPassword1">Bucket Name</label>
                       <input type="text" class="form-control"
-                          id="bucketname" name="bucketname" placeholder="Bucket Name"/>
+                          id="bucketname" name="bucketname"  required placeholder="Bucket Name"/>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Stock Data Path</label>
                       <input type="text" class="form-control"
-                          id="stockdatapath" name="stockdatapathvalue" placeholder="Stock Data Path"/>
+                          id="stockdatapath" name="stockdatapathvalue" required placeholder="Stock Data Path"/>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">RedShift JDBC URL</label>
                       <input type="text" class="form-control"
-                          id="redshiftjdbcurl" name="redshiftjdbcurl" placeholder="RedShift JDBC URL"/>
+                          id="redshiftjdbcurl" name="redshiftjdbcurl" required placeholder="RedShift JDBC URL"/>
                   </div>
                    <div class="form-group">
                     <label for="exampleInputPassword1">RedShift Master Username</label>
                       <input type="text" class="form-control"
-                          id="redshiftusername" name="redshiftusername" placeholder="RedShift Username"/>
+                          id="redshiftusername" name="redshiftusername" required placeholder="RedShift Username"/>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">RedShift Master Password</label>
                       <input type="text" class="form-control"
-                          id="redshiftuserpassword"  name="redshiftuserpassword" placeholder="RedShift Master Password"/>
+                          id="redshiftuserpassword"  name="redshiftuserpassword" required placeholder="RedShift Master Password"/>
                   </div>
                    <div class="form-group">
                     <label for="exampleInputPassword1">Mysql DB Name</label>
                       <input type="text" class="form-control"
-                          id="mysqldbname" name="mysqldbname" placeholder="Mysql DB Name"/>
+                          id="mysqldbname" name="mysqldbname" required placeholder="Mysql DB Name"/>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Mysql User Name</label>
                       <input type="text" class="form-control"
-                          id="mysqlusername" name="mysqlusername" placeholder="Mysql User Name"/>
+                          id="mysqlusername" name="mysqlusername" required placeholder="Mysql User Name"/>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Mysql Password</label>
                       <input type="text" class="form-control"
-                          id="mysqlpassword" name="mysqlpassword" placeholder="Mysql Password"/>
+                          id="mysqlpassword" name="mysqlpassword" required placeholder="Mysql Password"/>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Mysql JDBC URL</label>
                       <input type="text" class="form-control"
-                          id="mysqljdbcurl" name="mysqljdbcurl" placeholder="Mysql JDBC URL"/>
+                          id="mysqljdbcurl" name="mysqljdbcurl" required placeholder="Mysql JDBC URL"/>
                   </div>
                   
                   <div class="form-group">
                     <label for="exampleInputPassword1">Mysql JDBC CLASS NAME</label>
                       <input type="text" class="form-control"
-                          id="jdbcclass" name="mysqljdbcclass" placeholder="Mysql JDBC URL"/>
+                          id="jdbcclass" name="mysqljdbcclass" required placeholder="Mysql JDBC URL"/>
                   </div>
                   
                   <div class="form-group">
                     <label for="exampleInputPassword1">CloudBeam Automation URL</label>
                       <input type="text" class="form-control"
-                          id="cloudbeam_url" name="cloudbeam_auto_url" placeholder="CloudBeam Automation URL"/>
+                          id="cloudbeam_url" name="cloudbeam_auto_url" required placeholder="CloudBeam Automation URL"/>
                   </div>
-                  <button type="submit" class="btn btn-default">Submit</button>
+                  
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">CloudBeam Task Name</label>
+                      <input type="text" class="form-control"
+                          id="cbtaskname" name="cloudbeamtaskname" required placeholder="CloudBeam Task Name"/>
+                  </div>
+                  <button type="button" id="changeconfsetting" class="btn btn-default">Submit</button>
                 </form>
 			</div>
 			<!-- <div class="modal-footer">
