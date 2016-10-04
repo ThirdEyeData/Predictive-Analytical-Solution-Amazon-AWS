@@ -153,7 +153,7 @@ $( document ).ready(function() {
 	$( "#weathermodal" ).click(function() {
 		var body="Step 1 uploads historical weather data for three years to S3 and then to Redshift. This data is used as the training set for developing the machine learning algorithm for forecasting the storm in the incremental data set. The dataset contains, among other columns, information on the weather conditions, like minimum and maximum temperatures, the amount of precipitation, wind speed etc.";
 		
-		
+		$("#myModal").find('.modal-dialog').removeClass('modal-lg');
 		$('#myModal').modal() 
 		$('#modaltitle').html('')
 		$('#modaltitle').html('Weather Data (Historical) load')
@@ -164,7 +164,7 @@ $( document ).ready(function() {
 	
 	$( "#companyData" ).click(function() {
 		var body="Step 2 generates and uploads the historical stock data into S3 and then to Redshift. This dataset contains and information on the opening, closing, highest, lowest price trends, volume, etc of the stocks of a particular company. It also generates and uploads historical company data into MySQL. These multiple datasets contains information on the company, its product releases and press announcements.";
-		
+		$("#myModal").find('.modal-dialog').removeClass('modal-lg');
 		$('#myModal').modal() 
 		$('#modaltitle').html('')
 		$('#modaltitle').html('Stock and Company Data (Historical) load')
@@ -175,6 +175,8 @@ $( document ).ready(function() {
 	
 	$( "#nonstockData" ).click(function() {
 		var body="Step 3 uploads the non-stock company data from MySQL to Redshift using the ETL tool Attunity Cloudbeam.;"
+		
+		$("#myModal").find('.modal-dialog').removeClass('modal-lg');
 		$('#myModal').modal() 
 		$('#modaltitle').html('')
 		$('#modaltitle').html('Non-stock Company data - Redshift Upload')
@@ -185,6 +187,8 @@ $( document ).ready(function() {
 	
 	$( "#incrementalDataModal" ).click(function() {
 		var body="Step 4 generates and uploads the the incremental stock data to Redshift. It also uploads the  data for the incremental weather data for the upcoming seven days, for which we want to predict storm."
+		
+		$("#myModal").find('.modal-dialog').removeClass('modal-lg');
 		$('#myModal').modal() 
 		$('#modaltitle').html('')
 		$('#modaltitle').html('Stock and Weather data (Incremental) load')
@@ -195,6 +199,8 @@ $( document ).ready(function() {
 	
 	$( "#stormPredictionModal" ).click(function() {
 		var body="Step 5 executes the R-script for the machine learning algorithm. This script predicts the occurrence of storm in the incremental weather dataset for the next seven days, and saves the results on Redshift. It also sends alerts on the BYOD mobile app."
+		
+		$("#myModal").find('.modal-dialog').removeClass('modal-lg');
 		$('#myModal').modal() 
 		$('#modaltitle').html('')
 		$('#modaltitle').html('Storm Prediction')
@@ -261,6 +267,21 @@ $( document ).ready(function() {
 		
 	});
 	
+	// Architecture Diagram 
+	
+	$("#architecture").click(function() {
+		
+		var body="<img src='assets/img/hla.png' style='width:871px;' />";
+		    //alert( $("#myModal").find('.modal-dialog').html() );
+		    $("#myModal").find('.modal-dialog').addClass('modal-lg');
+			$('#myModal').modal() 
+			$('#modaltitle').html('')
+			$('#modaltitle').html('High Level Architecture Diagram')
+			$('#modalbody').html('')
+			$('#myModal').find('#modalbody').html(body)
+			
+		
+	});
 	
 });
 

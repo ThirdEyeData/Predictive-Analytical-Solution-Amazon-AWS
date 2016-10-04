@@ -7,12 +7,12 @@ var treeData = [
     "class": "start",
     "children": [
       {
-        "name": " Weather Data-Historical S3 Upload",
+        "name": "Weather Data-Historical S3 Upload",
         "parent": "Start",
         "class": "weatherdata",
         "children": [
         {
-            "name": "RedShift",
+            "name": "Amazon RedShift",
             "parent": "Weather Data",
             "class": "redshift"
                     
@@ -30,7 +30,7 @@ var treeData = [
             "class": "s3uploadmockup",
                 "children": [
                  {
-                "name": "RedShift",
+                "name": "Amazon RedShift",
                 "parent": "Mockup Data",
                 "class": "redshiftmockup" 
                 }
@@ -42,7 +42,7 @@ var treeData = [
               "class": "mysql",
               "children": [
                            	{
-                           		"name": "RedShift",
+                           		"name": "Amazon RedShift",
                                 "parent": "Mysql (Company Data)",
                                 "class": "cloudbeamredshift",
                            	}
@@ -54,12 +54,12 @@ var treeData = [
 
       },
        {
-        "name": "Data-Incremental Redshift Upload",
+        "name": "Data-Incremental Redshift Load",
         "parent": "Start",
         "class": "incremental",
         "children": [
           {
-            "name": "RedShift",
+            "name": "Amazon RedShift",
             "parent": "Incremental Data",
             "class": "incrementalred"
           }

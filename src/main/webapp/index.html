@@ -69,8 +69,8 @@ div#tooltip {
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="javascript:void(0);">AWS Market
-					Place Immersion Project</a>
+				<a class="navbar-brand" href="javascript:void(0);"><!-- AWS Market
+					Place Immersion Project --></a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<!-- <ul class="nav navbar-nav">
@@ -93,6 +93,9 @@ div#tooltip {
 				<ul class="nav navbar-nav navbar-right">
 					<!-- <li><a href="../navbar/">Default</a></li>
             <li><a href="../navbar-static-top/">Static top</a></li> -->
+            <li><a href="javascript:void(0);"
+						id="architecture" ><i class="fa fa-picture-o fa-lg"
+							aria-hidden="true"></i> <span class="sr-only">(current)</span></a></li>
 					<li><a href="https://github.com/ThirdEyeCSS/AmazonImmersion"
 						id="github" target="_blank"><i class="fa fa-github fa-lg"
 							aria-hidden="true"></i> <span class="sr-only">(current)</span></a></li>
@@ -111,9 +114,9 @@ div#tooltip {
 
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header" style="text-align: center;">
+					<h1 class="page-header" style="text-align: center; font-size: 1.8em;">
 						<img alt="" src="assets/img/index.png" height="80" width="80">
-						BYOD - Stock Trading Optimization using AWS Marketplace Solution
+						Secure BYOD Cloud Based Analytical System from AWS Marketplace - An End to End Solution
 					</h1>
 					<h5 style="text-align: center">
 						<strong>Prerequisites:</strong> Cloudbeam, MySQL and Redshift
@@ -141,7 +144,7 @@ div#tooltip {
 								<div class="panel panel-primary">
 									<div class="panel-heading">
 
-										<strong>Step-1:</strong> Weather Data (Historical) load
+										<strong>Step-1:</strong> Historical Weather Data Load
 										&nbsp;&nbsp;
 									</div>
 
@@ -159,8 +162,8 @@ div#tooltip {
 							<div class="col-lg-2 col-md-6" style="width: 21%">
 								<div class="panel panel-green">
 									<div class="panel-heading">
-										<strong>Step-2:</strong> Stock and Company Data (Historical)
-										load
+										<strong>Step-2:</strong> Historical Stock and Company Data 
+										Load
 									</div>
 
 									<div class="panel-footer">
@@ -178,8 +181,8 @@ div#tooltip {
 							<div class="col-lg-2 col-md-6" style="width: 21%">
 								<div class="panel panel-yellow">
 									<div class="panel-heading">
-										<strong>Step-3:</strong> Non-stock Company Data - Redshift
-										load
+										<strong>Step-3:</strong> Historical Company Data 
+										Load
 									</div>
 
 									<div class="panel-footer">
@@ -197,8 +200,8 @@ div#tooltip {
 							<div class="col-lg-2 col-md-6" style="width: 20%">
 								<div class="panel panel-red">
 									<div class="panel-heading">
-										<strong>Step-4:</strong> Stock and Weather Data (Incremental)
-										load
+										<strong>Step-4:</strong> Incremental Stock and Weather Data 
+										Load
 									</div>
 
 									<div class="panel-footer">
@@ -250,7 +253,7 @@ div#tooltip {
 									</h3>
 								</div>
 								<div class="panel-body">
-									<div id="tree"></div>
+									<div id="tree" style="margin-left: 150px;"></div>
 
 									<div id="tooltip" class="popover" role="tooltip"
 										style="background: #ffffff; color: black;">
@@ -375,6 +378,7 @@ function change_color()
 			</div>
 			<div class="modal-body">
 				<p id="modalbody"></p>
+				
 			</div>
 			<!-- <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
