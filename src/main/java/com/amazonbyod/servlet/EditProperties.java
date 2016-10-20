@@ -50,8 +50,10 @@ public class EditProperties extends HttpServlet {
 		String mysql_JDBC_DRIVER = prop.getMysql_JDBC_DRIVER();
 		String mysql_DB_URL = prop.getMysql_DB_URL();
 		String stockDatapath = prop.getStockDatapath();
+		String weatherDatapath = prop.getWeatherDatapath();
 		String cloudbeamurl = prop.getCloudbeam_slave_url();
 		String cloudbeam_taskname = prop.getCloudbeam_taskname();
+		String kony_url = prop.getKony_url();
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 		
@@ -69,7 +71,8 @@ public class EditProperties extends HttpServlet {
 		map.put("stockDatapath", stockDatapath);
 		map.put("cloudbeamurl", cloudbeamurl);
 		map.put("cloudbeam_taskname", cloudbeam_taskname);
-		
+		map.put("kony_url", kony_url);
+		map.put("weatherDatapath", weatherDatapath);
 		
 		JSONObject obj = new JSONObject();
 		try {
@@ -103,6 +106,8 @@ public class EditProperties extends HttpServlet {
 		String stockDatapath = request.getParameter("stockdatapathvalue");
 		String cloudbeamurl = request.getParameter("cloudbeam_auto_url");
 		String cloudbeam_taskname = request.getParameter("cloudbeamtaskname");
+		String kony_url = request.getParameter("kony_url");
+		String weatherDatapath = request.getParameter("weatherdatapathvalue");
 		
 		prop.setAccessKey(accessKey);
 		prop.setSecretKey(secretKey);
@@ -118,6 +123,8 @@ public class EditProperties extends HttpServlet {
 		prop.setStockDatapath(stockDatapath);
 		prop.setCloudbeam_slave_url(cloudbeamurl);
 		prop.setCloudbeam_taskname(cloudbeam_taskname);
+		prop.setKony_url(kony_url);
+		prop.setWeatherDatapath(weatherDatapath);
 	}
 
 }

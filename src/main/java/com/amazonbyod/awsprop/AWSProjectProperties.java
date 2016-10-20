@@ -26,7 +26,11 @@ public class AWSProjectProperties {
 	private String stockDatapath = "stockDatapath";
 	private String cloudbeam_slave_url = "cloudbeam_slave_url";
 	private String cloudbeam_taskname = "cloudbeam_taskname";
+	private String kony_url = "kony_url";
+	private String weatherDatapath = "weatherDatapath";
 
+
+	
 
 	static Properties prop = new Properties();
 	static InputStream input = Thread.currentThread().getContextClassLoader()
@@ -159,11 +163,32 @@ public class AWSProjectProperties {
 		prop.load(input);
 		return prop.getProperty(cloudbeam_taskname);
 	}
-
     
+	public String getKony_url() throws IOException {
+		prop.load(input);
+		return prop.getProperty(kony_url);
+	}
+	
+	public String getWeatherDatapath() throws IOException {
+		prop.load(input);
+		return prop.getProperty(weatherDatapath);
+	}
+
+  
 	/*
 	 * Setter Part Starts Here
-	 * */
+	 * 
+	 */
+	
+	public void setWeatherDatapath(String weatherDatapath) throws IOException {
+		prop.load(input);
+		prop.setProperty("weatherDatapath",weatherDatapath);
+	}
+	
+	public void setKony_url(String kony_url) throws IOException {
+		prop.load(input);
+		prop.setProperty("kony_url",kony_url);
+	}
 	
 	public void setAccessKey(String accessKey) throws IOException {
 		prop.load(input);

@@ -1,5 +1,6 @@
 package com.amazonbyod.scheduler;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
 
@@ -16,9 +17,20 @@ public class WeatherIncrementalData implements Job {
 	AwsRedshiftOperations redshift = new AwsRedshiftOperations();
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		Connection conn = redshift.redShiftConnect();
+		Connection conn = null;
+		try {
+			conn = redshift.redShiftConnect();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		List<WeatherData> row = weather.incrementalWeatherData();
 		redshift.insertWeatherData(conn, row);
-		redshift.redShiftConnect();
+		try {
+			redshift.redShiftConnect();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

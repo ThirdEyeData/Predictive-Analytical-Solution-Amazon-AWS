@@ -20,9 +20,11 @@ $( document ).ready(function() {
 					showTree(JSON.parse(dataSplit[1]))
 					showTree(JSON.parse(dataSplit[2]))
 					showTree(JSON.parse(dataSplit[3]))
+					showBar("Stock Data Successfully Loaded into Amazon RedShift")
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					alert("ERROR:" + xhr.responseText + " - " + thrownError);
+					showBar("Stock Data Failed to Loaded into Amazon RedShift")
 				}
 
 			});
@@ -45,9 +47,11 @@ $( document ).ready(function() {
 					showTree(JSON.parse(dataSplit[0]))
 					showTree(JSON.parse(dataSplit[1]))
 					//showTree(JSON.parse(data))
+					showBar("Weather Data Successfully Loaded into Amazon RedShift")
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					alert("ERROR:" + xhr.responseText + " - " + thrownError);
+					showBar("Weather Data Failed to load into Amazon RedShit")
 				}
 
 			});
@@ -74,6 +78,7 @@ $( document ).ready(function() {
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					alert("ERROR:" + xhr.responseText + " - " + thrownError);
+					showBar("Weather DIncremental Data Loading Failed")
 				}
 
 			});
@@ -105,7 +110,7 @@ $( document ).ready(function() {
 
 			});
 		  
-		  showBar("Weather Data Loading Started")
+		  showBar("Company Data Loading Stated")
 		 
 		});
 	
@@ -234,6 +239,8 @@ $( document ).ready(function() {
 					$("#stockdatapath").val(data.projectProp.stockDatapath);
 					$("#cloudbeam_url").val(data.projectProp.cloudbeamurl);
 					$("#cbtaskname").val(data.projectProp.cloudbeam_taskname);
+					$("#kony_url").val(data.projectProp.kony_url);
+					$("#weatherdatapath").val(data.projectProp.weatherDatapath);
 					
 					$('#settingmodal').modal();
 				},

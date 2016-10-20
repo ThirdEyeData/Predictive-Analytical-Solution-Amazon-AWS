@@ -12,7 +12,7 @@ import com.amazonbyod.awsprop.AWSProjectProperties;
 public class Test {
 	
 	
-/*	public static void main(String args[]) throws IOException {
+	public static void main(String args[]) throws IOException {
 		 AWSProjectProperties awscredentials = new AWSProjectProperties();
 		AWSCredentials credentials = new BasicAWSCredentials(awscredentials.getAccessKey(), awscredentials.getSecretKey());
 		// Each instance of TransferManager maintains its own thread pool
@@ -29,10 +29,9 @@ public class Test {
 		while (upload.isDone() == false) {
 		    System.out.println(upload.getProgress().getPercentTransferred() + "%");
 		}	
+	
+	
+	/*public static void main(String args[]){
 		
 	}*/
-	
-	public static void main(String args[]){
-		
-	}
 }

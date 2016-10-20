@@ -18,11 +18,15 @@ import com.amazonbyod.listclass.WeatherData;
 public class AwsRedshiftOperations {
 
 	static AWSProjectProperties awscredentials = new AWSProjectProperties();
-	static final String dbURL = "jdbc:redshift://immersion-project.cziozxqpyojq.us-west-2.redshift.amazonaws.com:5439/immersion";
-	static final String MasterUsername = "immersion";
-	static final String MasterUserPassword = "Immersion!2016";
+	
+	
 
-	public Connection redShiftConnect() {
+	public Connection redShiftConnect() throws IOException {
+		
+		 String dbURL = awscredentials.getRedshift_jdbc_url();
+		 String MasterUsername = awscredentials.getMaster_username();
+		 String MasterUserPassword = awscredentials.getMaster_password();
+		 
 		Connection connect = null;
 		try {
 			Class.forName("com.amazon.redshift.jdbc4.Driver");
@@ -142,10 +146,10 @@ public class AwsRedshiftOperations {
 	}
 	
 	
-	public void loadDatafromS3(Connection conn,String tablename,String bucketStructure,String key){
+	public void loadDatafromS3(Connection conn,String tablename,String bucketStructure,String key) throws IOException{
 		truncateTable(conn,tablename);
 		String loadSQL = "copy "+tablename+" from 's3://"+bucketStructure+"/"+key+"' "
-				+ "credentials 'aws_access_key_id=AKIAJFETOLAADYA37PTQ;aws_secret_access_key=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' "
+				+ "credentials 'aws_access_key_id="+awscredentials.getAccessKey()+";aws_secret_access_key="+awscredentials.getSecretKey()+"'"
 				+ "delimiter ',' region 'us-west-2'";
 		System.out.println(loadSQL);
 		try {

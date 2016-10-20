@@ -49,7 +49,7 @@ public class DashboardOperation extends HttpServlet {
 	static final long unixTime = System.currentTimeMillis() / 1000L;
 	static AWSProjectProperties awscredentials = new AWSProjectProperties();
 	static S3Operations s3 = new S3Operations();
-	static String bucketName="amazon-aws-immersion-project";
+	
 	String companySymbol="";
        
     /**
@@ -74,7 +74,7 @@ public class DashboardOperation extends HttpServlet {
 
 		  //encoding must be set to UTF-8
 		  response.setCharacterEncoding("UTF-8");
-
+		  String bucketName=awscredentials.getBucketName();
 		
 		PrintWriter out = response.getWriter();
 		
@@ -111,20 +111,23 @@ public class DashboardOperation extends HttpServlet {
 		System.out.println("Hello "+datatype);
 		
 		if(datatype.equals("weather")){
-			//String weatherDataStart=buildJson("weatherdata","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
-			//out.write(weatherDataStart);
-			
 			
 			String s3folder="weatherdata/weatherdata.csv";
-			s3client.setRegion(Region.getRegion(Regions.US_WEST_2));
-			s3.S3Upload(s3client, bucketName+"/weatherdata", s3folder, "/home/abhinandan/TE/Datasets/Project/AWS/Datasets/Weather/weather_data_updated.csv");
+			//s3client.setRegion(Region.getRegion(Regions.US_WEST_2));
+			s3.S3Upload(s3client, bucketName, s3folder, awscredentials.getWeatherDatapath());
 			
 			String S3weatherdataUpload=buildJson("weatherdata","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
+			
+			String[] filePathSplit=s3folder.split("/");
+	 		String fileName=filePathSplit[filePathSplit.length-1];
+
+			Connection redShiftConnect = redShift.redShiftConnect();
+			redShift.loadDatafromS3(redShiftConnect, "weather_storm_data", bucketName+"/weatherdata", fileName);
+			redShift.redShiftDisconnect(redShiftConnect);
+			
 			String redshiftweather = buildJson("redshift","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
 			out.write(S3weatherdataUpload+"---"+redshiftweather);
-			
-			
-			
+		
 			
 		  }else if(datatype.equals("mockup")){
 			  String weatherDataStart=buildJson("mockup","green","Start At:"+new Date());
@@ -166,19 +169,28 @@ public class DashboardOperation extends HttpServlet {
 			     mysql.insertDataCompanyAnnouncement(conn, calist);
 				 mysql.insertDataCompanyProduct(conn, cproList);
 		         mysql.mysqlDisconnect(conn);
-		         String mysqlstatus=buildJson("mysql","green","<p style='color:green'>Successfully Completed</p> On:"+new Date()); 
+		         String mysqlstatus=buildJson("mysql","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
+		         
+		         String filePath=mockup.minMockUpData(awscredentials.getStockDatapath(), startDate, endDate,
+						companySymbol, 35, 42, 35000, 37541, stockChanger);
+		 		
+		 		 String[] filePathSplit=filePath.split("/");
+		 		 String fileName=filePathSplit[filePathSplit.length-1];
+		 		 String s3folder="stockdata/"+fileName;
+		 		 s3.S3Upload(s3client, bucketName, s3folder , filePath);
 		         String s3uplaod=buildJson("s3uploadmockup","green","<p style='color:green'>Successfully Completed</p> On:"+new Date()); 
-		         String redshiftload=buildJson("redshiftmockup","green","<p style='color:green'>Successfully Completed</p> On:"+new Date()); 
-			      out.write(weatherDataStart+"---"+mysqlstatus+"---"+s3uplaod+"---"+redshiftload);
-			  
+		         
+		        Connection redShiftConnect = redShift.redShiftConnect();
+		 		redShift.loadDatafromS3(redShiftConnect, "stock_datademo", bucketName+"/stockdata", fileName);
+		 		redShift.redShiftDisconnect(redShiftConnect);
+		        String redshiftload=buildJson("redshiftmockup","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
+			    out.write(weatherDataStart+"---"+mysqlstatus+"---"+s3uplaod+"---"+redshiftload);
 			  
 		  }else if (datatype.equals("incremental")){
 			    String Incrementaldata=buildJson("incremental","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
 			   // Initialized Quartz
 				StreamingMockupData streaming = new StreamingMockupData(companySymbol);
 				
-				
-		
 				streaming.startStreaming();
 				String IncrementaldataStart=buildJson("incrementalred","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
 				out.write(Incrementaldata+"---"+IncrementaldataStart);
@@ -195,7 +207,7 @@ public class DashboardOperation extends HttpServlet {
 			  httpPost.setEntity(new UrlEncodedFormEntity(params));
 			  CloseableHttpResponse httpresponse = client.execute(httpPost);
 			  System.out.println(httpresponse.getStatusLine().getStatusCode());
-			  String cloudbeamtaskstatus=buildJson("cloudbeamredshift","green","Start At:"+new Date());
+			  String cloudbeamtaskstatus=buildJson("cloudbeamredshift","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
 			  client.close();
 			  out.write(cloudbeamtask+"---"+cloudbeamtaskstatus);
 		  }
