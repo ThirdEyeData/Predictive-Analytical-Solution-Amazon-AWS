@@ -70,7 +70,7 @@ public class AwsRedshiftOperations {
 
 
 	public void insertStockData(Connection conn, List<StockData> row) {
-		String insertTableSQL = "INSERT INTO stock_datademo (stock_symbol,stock_data,stock_time ,stock_open ,stock_high,stock_low ,stock_close ,stock_vol ,stock_div ,stock_split ,stock_adjopen ,stock_adjhigh ,stock_adjlow ,stock_adjclose ,stock_adjvol )"
+		String insertTableSQL = "INSERT INTO stock_data (stock_symbol,stock_date,stock_time ,stock_open ,stock_high,stock_low ,stock_close ,stock_vol ,stock_div ,stock_split ,stock_adjopen ,stock_adjhigh ,stock_adjlow ,stock_adjclose ,stock_adjvol )"
 				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		try {
@@ -145,6 +145,35 @@ public class AwsRedshiftOperations {
 		}
 	}
 	
+	public void tableExists(Connection conn, String tablename) {
+		String tableCheck = "SELECT DISTINCT tablename FROM pg_table_def WHERE schemaname = 'public' ORDER BY tablename";
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(tableCheck);
+			while (rs.next()) {
+				if (tablename != rs.getString(1)) {
+					if (tablename == "stock_data") {
+                        String createTable = "";
+						stmt.executeUpdate(createTable);
+					} else if (tablename == "weather_data_incremental") {
+						String createTable = "";
+						stmt.executeUpdate(createTable);
+					} else if (tablename == "") {
+						String createTable = "";
+						stmt.executeUpdate(createTable);
+					} else {
+						String createTable = "";
+						stmt.executeUpdate(createTable);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 	
 	public void loadDatafromS3(Connection conn,String tablename,String bucketStructure,String key) throws IOException{
 		truncateTable(conn,tablename);
@@ -160,6 +189,12 @@ public class AwsRedshiftOperations {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static void main(String args[]) throws IOException{
+		AwsRedshiftOperations aws =new AwsRedshiftOperations();
+		Connection con=aws.redShiftConnect();
+		aws.tableExists(con, "");
 	}
 
 }

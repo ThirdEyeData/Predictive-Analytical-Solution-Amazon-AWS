@@ -54,6 +54,7 @@ public class EditProperties extends HttpServlet {
 		String cloudbeamurl = prop.getCloudbeam_slave_url();
 		String cloudbeam_taskname = prop.getCloudbeam_taskname();
 		String kony_url = prop.getKony_url();
+		String prediction_path = prop.getPrediction_path();
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 		
@@ -73,6 +74,7 @@ public class EditProperties extends HttpServlet {
 		map.put("cloudbeam_taskname", cloudbeam_taskname);
 		map.put("kony_url", kony_url);
 		map.put("weatherDatapath", weatherDatapath);
+		map.put("prediction_path", prediction_path);
 		
 		JSONObject obj = new JSONObject();
 		try {
@@ -108,6 +110,7 @@ public class EditProperties extends HttpServlet {
 		String cloudbeam_taskname = request.getParameter("cloudbeamtaskname");
 		String kony_url = request.getParameter("kony_url");
 		String weatherDatapath = request.getParameter("weatherdatapathvalue");
+		String prediction_path = request.getParameter("predictionpath");
 		
 		prop.setAccessKey(accessKey);
 		prop.setSecretKey(secretKey);
@@ -125,6 +128,7 @@ public class EditProperties extends HttpServlet {
 		prop.setCloudbeam_taskname(cloudbeam_taskname);
 		prop.setKony_url(kony_url);
 		prop.setWeatherDatapath(weatherDatapath);
+		prop.setPrediction_path(prediction_path);
 	}
 
 }

@@ -1,6 +1,9 @@
 package com.amazonbyod.servlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.text.DateFormat;
@@ -31,6 +34,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonbyod.awsprop.AWSProjectProperties;
+import com.amazonbyod.kony.KonyMobilePushNotification;
 import com.amazonbyod.listclass.CompanyProducts;
 import com.amazonbyod.listclass.CompanyProfile;
 import com.amazonbyod.listclass.Companyannouncements;
@@ -91,7 +95,9 @@ public class DashboardOperation extends HttpServlet {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 		
 		DataMockupGenerator mockup = new DataMockupGenerator(); 
-
+        
+		//Kony Push Notification
+		KonyMobilePushNotification kony = new KonyMobilePushNotification();
 		Calendar endcal = Calendar.getInstance();
 		endcal.add(Calendar.DATE, -1);
 		
@@ -190,7 +196,6 @@ public class DashboardOperation extends HttpServlet {
 			    String Incrementaldata=buildJson("incremental","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
 			   // Initialized Quartz
 				StreamingMockupData streaming = new StreamingMockupData(companySymbol);
-				
 				streaming.startStreaming();
 				String IncrementaldataStart=buildJson("incrementalred","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
 				out.write(Incrementaldata+"---"+IncrementaldataStart);
@@ -210,6 +215,23 @@ public class DashboardOperation extends HttpServlet {
 			  String cloudbeamtaskstatus=buildJson("cloudbeamredshift","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
 			  client.close();
 			  out.write(cloudbeamtask+"---"+cloudbeamtaskstatus);
+		  }else if(datatype.equals("prediction")){
+			    String pythonPath=awscredentials.getPrediction_path();
+			    Runtime runtime = Runtime.getRuntime();
+			    Process processs = runtime.exec("python "+pythonPath);
+				OutputStream output = processs.getOutputStream();
+				BufferedReader br = new BufferedReader(new InputStreamReader(processs.getInputStream()));		
+				String processString = "";		
+				while((processString = br.readLine()) != null) {			
+					
+					processString =processString+"\t"+ br.readLine();		
+					
+				}
+				kony.getStorm();
+				//String cloudbeamtaskstatus=buildJson("cloudbeamredshift","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
+				out.println(processString);
+		  }else{
+			  
 		  }
 		}
 		

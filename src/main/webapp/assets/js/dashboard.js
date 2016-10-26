@@ -75,10 +75,11 @@ $( document ).ready(function() {
 					var dataSplit=data.split("---");
 					showTree(JSON.parse(dataSplit[0]))
 					showTree(JSON.parse(dataSplit[1]))
+					showBar("Weather & Stock Incremental Data Loading into Amazon RedShift")
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					alert("ERROR:" + xhr.responseText + " - " + thrownError);
-					showBar("Weather DIncremental Data Loading Failed")
+					showBar("Weather & Stock Incremental Data Loading Failed")
 				}
 
 			});
@@ -103,9 +104,11 @@ $( document ).ready(function() {
 					showTree(JSON.parse(dataSplit[0]))
 					showTree(JSON.parse(dataSplit[1]))
 					//showTree(JSON.parse(data))
+					showBar("Company Data Loaded into Amazon redShift Using Attunity CloudBeam")
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 					alert("ERROR:" + xhr.responseText + " - " + thrownError);
+					showBar("Company Data Loaded into Amazon redShift Using Attunity CloudBeam")
 				}
 
 			});
@@ -113,7 +116,30 @@ $( document ).ready(function() {
 		  showBar("Company Data Loading Stated")
 		 
 		});
-	
+	//Start Prediction
+	$( "#startPrediction" ).click(function() {
+		showTree(JSON.parse(startProcess))
+		  
+		  $.ajax({
+				url : "./DashboardOperation",
+				type : "POST",
+				data : {
+			        datatype: "prediction"
+			    },
+				success : function(data) {
+					
+					showTree(JSON.parse(data))
+					//showTree(JSON.parse(data))
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+					alert("ERROR:" + xhr.responseText + " - " + thrownError);
+				}
+
+			});
+		  
+		  showBar("Start Prediction")
+		 
+		});
 	
 	function showBar(messgae){
 		 $("#messageBox").show();
@@ -241,7 +267,7 @@ $( document ).ready(function() {
 					$("#cbtaskname").val(data.projectProp.cloudbeam_taskname);
 					$("#kony_url").val(data.projectProp.kony_url);
 					$("#weatherdatapath").val(data.projectProp.weatherDatapath);
-					
+					$("#ppath").val(data.projectProp.prediction_path);
 					$('#settingmodal').modal();
 				},
 				error : function(xhr, ajaxOptions, thrownError) {

@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -365,6 +367,11 @@ public class DataMockupGenerator {
 	}
 
 	public List<WeatherData> incrementalWeatherData() {
+		
+		InputStream input = Thread.currentThread().getContextClassLoader()
+				.getResourceAsStream("Incremental_weather_data.csv");
+		
+		InputStreamReader r = new InputStreamReader(input);
 		String csvFile = "Incremental_weather_data.csv";
 		BufferedReader br = null;
 		String line = "";
@@ -376,7 +383,8 @@ public class DataMockupGenerator {
 		List<WeatherData> row = new ArrayList<WeatherData>();
 		List<Integer> randomList = new ArrayList<Integer>();
 		try {
-			br = new BufferedReader(new FileReader(csvFile));
+			//br = new BufferedReader(new FileReader(csvFile));
+			br = new BufferedReader(r);
 
 			for (int i = 0; i < 7; i++) {
 				Random random = new Random();
@@ -427,6 +435,9 @@ public class DataMockupGenerator {
 		return row;
 
 	}
+	
+	
+
 
 	public List<CompanyProfile> createCompanyProfile() {
 

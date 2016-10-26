@@ -227,7 +227,7 @@ div#tooltip {
 									<div class="panel-footer">
 										<button
 											style="color: white; background-color: #0f9cad; border-color: #0f9cad;"
-											class="btn   btn-info btn-sm" id="">Start</button>
+											class="btn   btn-info btn-sm" id="startPrediction">Start</button>
 										<a href="javascript:void(0);" id="stormPredictionModal"
 											style="color: #0f9cad"> <span class="pull-right"><i
 												class="fa fa-arrow-circle-right"></i></span>
@@ -484,9 +484,15 @@ function change_color()
                   </div>
                   
                  <div class="form-group">
-                    <label for="exampleInputPassword1">Kony Mobile URLq</label>
+                    <label for="exampleInputPassword1">Kony Mobile URL</label>
                       <input type="text" class="form-control"
                           id="kony_url" name="kony_url" required placeholder="Kony Url"/>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Prediction Path</label>
+                      <input type="text" class="form-control"
+                          id="ppath" name="predictionpath" required placeholder="Prediction Path"/>
                   </div>
                   <button type="button" id="changeconfsetting" class="btn btn-default">Submit</button>
                 </form>

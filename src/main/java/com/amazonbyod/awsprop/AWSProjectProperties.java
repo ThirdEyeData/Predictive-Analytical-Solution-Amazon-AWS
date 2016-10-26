@@ -28,7 +28,10 @@ public class AWSProjectProperties {
 	private String cloudbeam_taskname = "cloudbeam_taskname";
 	private String kony_url = "kony_url";
 	private String weatherDatapath = "weatherDatapath";
+	private String prediction_path = "prediction_path";
 
+
+	
 
 	
 
@@ -173,12 +176,23 @@ public class AWSProjectProperties {
 		prop.load(input);
 		return prop.getProperty(weatherDatapath);
 	}
-
+	
+	public String getPrediction_path() throws IOException {
+		prop.load(input);
+		return prop.getProperty(prediction_path);
+		
+	}
   
 	/*
 	 * Setter Part Starts Here
 	 * 
 	 */
+	
+
+	public void setPrediction_path(String prediction_path) throws IOException {
+		prop.load(input);
+		prop.setProperty("prediction_path",prediction_path);
+	}
 	
 	public void setWeatherDatapath(String weatherDatapath) throws IOException {
 		prop.load(input);
