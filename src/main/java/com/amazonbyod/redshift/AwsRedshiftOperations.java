@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
@@ -145,33 +144,24 @@ public class AwsRedshiftOperations {
 		}
 	}
 	
-	public void tableExists(Connection conn, String tablename) {
-		String tableCheck = "SELECT DISTINCT tablename FROM pg_table_def WHERE schemaname = 'public' ORDER BY tablename";
-		Statement stmt;
+	public void startCreateTable(Connection conn) {
+		
+		String stockData="create table if not exists stock_data(stock_symbol varchar(255),stock_date date,stock_time TIMESTAMP,stock_open float,stock_high float,stock_low float,stock_close float,stock_vol int,stock_div float,stock_split int,stock_adjopen float,stock_adjhigh float,stock_adjlow float,stock_adjclose float,stock_adjvol int)";
+		String weather_storm_data="create table if exits weather_storm_data (station_code varchar(255),station_name varchar(255),lat float,lng float,wdate date,tmax int,tmin int,windspeed float,rainfall float,snowfall int,storm int)";
+		String weather_data_incremental="create table if exits weather_data_incremental (station_code varchar(255),station_name varchar(255),lat float,lng float,wdate date,tmax int,tmin int,windspeed float,rainfall float,snowfall int,storm int,flag int)";
+		String weather_prediction="create table if exits weather_prediction (station_code varchar(255),station_name varchar(255),lat float,lng float,wdate date,tmax int,tmin int,windspeed float,rainfall float,snowfall int,storm int,flag int,pre int)";
 		try {
-			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(tableCheck);
-			while (rs.next()) {
-				if (tablename != rs.getString(1)) {
-					if (tablename == "stock_data") {
-                        String createTable = "";
-						stmt.executeUpdate(createTable);
-					} else if (tablename == "weather_data_incremental") {
-						String createTable = "";
-						stmt.executeUpdate(createTable);
-					} else if (tablename == "") {
-						String createTable = "";
-						stmt.executeUpdate(createTable);
-					} else {
-						String createTable = "";
-						stmt.executeUpdate(createTable);
-					}
-				}
-			}
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate(stockData);
+			stmt.executeUpdate(weather_storm_data);
+			stmt.executeUpdate(weather_data_incremental);
+			stmt.executeUpdate(weather_prediction);
+			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 
 	}
 	
@@ -191,10 +181,5 @@ public class AwsRedshiftOperations {
 		}
 	}
 	
-	public static void main(String args[]) throws IOException{
-		AwsRedshiftOperations aws =new AwsRedshiftOperations();
-		Connection con=aws.redShiftConnect();
-		aws.tableExists(con, "");
-	}
-
+	
 }

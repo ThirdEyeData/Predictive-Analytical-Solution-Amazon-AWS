@@ -586,7 +586,7 @@ public class DataMockupGenerator {
 		//s3.S3Upload(s3client, bucketName, s3folder , filePath);
 		
 		//Connection redShiftConnect = redShift.redShiftConnect();
-		//redShift.loadDatafromS3(redShiftConnect, "stock_datademo", bucketName+"/stockdata", fileName);
+		//redShift.loadDatafromS3(redShiftConnect, "stock_data", bucketName+"/stockdata", fileName);
 		//redShift.redShiftDisconnect(redShiftConnect);
 		
 		//s3.S3Upload(s3Client, existingBucketName, keyName, filePath);

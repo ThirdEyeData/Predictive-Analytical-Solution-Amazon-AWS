@@ -44,6 +44,7 @@ import com.amazonbyod.mysql.MySQLConnection;
 import com.amazonbyod.redshift.AwsRedshiftOperations;
 import com.amazonbyod.s3.S3Operations;
 import com.amazonbyod.scheduler.StreamingMockupData;
+import com.amazonbyod.scheduler.TriggerKonyNotification;
 
 /**
  * Servlet implementation class DashboardOperation
@@ -80,7 +81,7 @@ public class DashboardOperation extends HttpServlet {
 		  response.setCharacterEncoding("UTF-8");
 		  String bucketName=awscredentials.getBucketName();
 		
-		PrintWriter out = response.getWriter();
+		  PrintWriter out = response.getWriter();
 		
 		
 		//Mysql Connection
@@ -95,6 +96,10 @@ public class DashboardOperation extends HttpServlet {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 		
 		DataMockupGenerator mockup = new DataMockupGenerator(); 
+		
+		//Craete Redshift Table
+		Connection redshiftconn = redShift.redShiftConnect();
+		redShift.startCreateTable(redshiftconn);
         
 		//Kony Push Notification
 		KonyMobilePushNotification kony = new KonyMobilePushNotification();
@@ -217,6 +222,7 @@ public class DashboardOperation extends HttpServlet {
 			  out.write(cloudbeamtask+"---"+cloudbeamtaskstatus);
 		  }else if(datatype.equals("prediction")){
 			    String pythonPath=awscredentials.getPrediction_path();
+			    TriggerKonyNotification tkony = new TriggerKonyNotification();
 			    Runtime runtime = Runtime.getRuntime();
 			    Process processs = runtime.exec("python "+pythonPath);
 				OutputStream output = processs.getOutputStream();
@@ -227,9 +233,9 @@ public class DashboardOperation extends HttpServlet {
 					processString =processString+"\t"+ br.readLine();		
 					
 				}
-				kony.getStorm();
-				//String cloudbeamtaskstatus=buildJson("cloudbeamredshift","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
-				out.println(processString);
+				tkony.startNotification();
+				String cloudbeamtaskstatus=buildJson("prediction","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
+				out.println(cloudbeamtaskstatus);
 		  }else{
 			  
 		  }
