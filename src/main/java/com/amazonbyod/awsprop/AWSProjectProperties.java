@@ -1,7 +1,10 @@
 package com.amazonbyod.awsprop;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Properties;
 
 /**
@@ -38,6 +41,13 @@ public class AWSProjectProperties {
 	static Properties prop = new Properties();
 	static InputStream input = Thread.currentThread().getContextClassLoader()
 			.getResourceAsStream("ProjectConf.properties");
+	 
+	//static FileOutputStream output = new FileOutputStream("ProjectConf.properties");
+	
+	
+	
+	
+	
 
 	/**
 	 * @return the accessKey
@@ -188,87 +198,143 @@ public class AWSProjectProperties {
 	 * 
 	 */
 	
-
+	OutputStream out = null;
 	public void setPrediction_path(String prediction_path) throws IOException {
+		File f = new File("ProjectConf.properties");
 		prop.load(input);
 		prop.setProperty("prediction_path",prediction_path);
+		out = new FileOutputStream( f );
+		prop.store(out, "This is an optional header comment string");
+		System.out.print(getPrediction_path());
+		
 	}
 	
 	public void setWeatherDatapath(String weatherDatapath) throws IOException {
+		FileOutputStream outfile = new FileOutputStream("ProjectConf.properties");
 		prop.load(input);
 		prop.setProperty("weatherDatapath",weatherDatapath);
+		prop.store(outfile, null);
+		outfile.close();
+		System.out.print(getWeatherDatapath());
 	}
 	
 	public void setKony_url(String kony_url) throws IOException {
+		FileOutputStream outfile = new FileOutputStream("ProjectConf.properties");
 		prop.load(input);
 		prop.setProperty("kony_url",kony_url);
+		prop.store(outfile, null);
+		outfile.close();
 	}
 	
 	public void setAccessKey(String accessKey) throws IOException {
+		FileOutputStream outfile = new FileOutputStream("ProjectConf.properties");
 		prop.load(input);
 		prop.setProperty("accessKey", accessKey);
+		prop.store(outfile, null);
+		outfile.close();
 	}
 	public void setSecretKey(String secretKey) throws IOException {
+		FileOutputStream outfile = new FileOutputStream("ProjectConf.properties");
 		prop.load(input);
 		prop.setProperty("secretKey", secretKey);
+		prop.store(outfile, null);
+		outfile.close();
 	}
 	public void setBucketName(String bucketName) throws IOException {
+		FileOutputStream outfile = new FileOutputStream("ProjectConf.properties");
 		prop.load(input);
 		prop.setProperty("bucketName", bucketName);
+		prop.store(outfile, null);
+		outfile.close();
 	}
 	public void setMysql_dbname(String mysql_dbname) throws IOException {
+		FileOutputStream outfile = new FileOutputStream("ProjectConf.properties");
 		prop.load(input);
 		prop.setProperty("mysql_dbname", mysql_dbname);
+		prop.store(outfile, null);
+		outfile.close();
 	}
 	public void setMysql_username(String mysql_username) throws IOException {
+		FileOutputStream outfile = new FileOutputStream("ProjectConf.properties");
 		prop.load(input);
 		prop.setProperty("mysql_username", mysql_username);
+		prop.store(outfile, null);
+		outfile.close();
 	}
 	public void setMysql_password(String mysql_password) throws IOException {
+		FileOutputStream outfile = new FileOutputStream("ProjectConf.properties");
 		prop.load(input);
 		prop.setProperty("mysql_password", mysql_password);
+		prop.store(outfile, null);
+		outfile.close();
 	}
 	public void setMysql_JDBC_DRIVER(String mysql_JDBC_DRIVER) throws IOException {
+		FileOutputStream outfile = new FileOutputStream("ProjectConf.properties");
 		prop.load(input);
 		prop.setProperty("mysql_JDBC_DRIVER", mysql_JDBC_DRIVER);
+		prop.store(outfile, null);
+		outfile.close();
 	}
 	public void setMysql_DB_URL(String mysql_DB_URL) throws IOException {
+		FileOutputStream outfile = new FileOutputStream("ProjectConf.properties");
 		prop.load(input);
 		prop.setProperty("mysql_DB_URL", mysql_DB_URL);
+		prop.store(outfile, null);
+		outfile.close();
 	}
 	public void setRedshift_jdbc_url(String redshift_jdbc_url) throws IOException {
+		FileOutputStream outfile = new FileOutputStream("ProjectConf.properties");
 		prop.load(input);
 		prop.setProperty("redshift_jdbc_url", redshift_jdbc_url);
+		prop.store(outfile, null);
+		outfile.close();
 	}
 	public void setMaster_username(String master_username) throws IOException {
+		FileOutputStream outfile = new FileOutputStream("ProjectConf.properties");
 		prop.load(input);
 		prop.setProperty("master_username", master_username);
+		prop.store(outfile, null);
+		outfile.close();
 	}
 	public void setMaster_password(String master_password) throws IOException {
+		FileOutputStream outfile = new FileOutputStream("ProjectConf.properties");
 		prop.load(input);
 		prop.setProperty("master_password", master_password);
+		prop.store(outfile, null);
+		outfile.close();
 	}
 	public void setStockDatapath(String stockDatapath) throws IOException {
+		FileOutputStream outfile = new FileOutputStream("ProjectConf.properties");
 		prop.load(input);
 		prop.setProperty("stockDatapath", stockDatapath);
+		prop.store(outfile, null);
+		outfile.close();
 	}
 	public void setCloudbeam_slave_url(String cloudbeam_slave_url) throws IOException {
+		FileOutputStream outfile = new FileOutputStream("ProjectConf.properties");
 		prop.load(input);
 		prop.setProperty("cloudbeam_slave_url", cloudbeam_slave_url);
+		prop.store(outfile, null);
+		outfile.close();
 	}
 	
 	public void setCloudbeam_taskname(String cloudbeam_taskname) throws IOException {
+		FileOutputStream outfile = new FileOutputStream("ProjectConf.properties");
 		prop.load(input);
 		prop.setProperty("cloudbeam_taskname", cloudbeam_taskname);
+		prop.store(outfile, null);
+		outfile.close();
 	}
 
-	/*
-	 * public static void main(String args[]) throws IOException{
-	 * 
-	 * AWSProperties aws = new AWSProperties();
-	 * System.out.println(aws.getAccessKey());
-	 * System.out.println(aws.getSecretKey());
-	 * 
-	 * }
-	 */
+	
+	  public static void main(String args[]) throws IOException{
+	  
+		  AWSProjectProperties aws = new AWSProjectProperties();
+	  System.out.println(aws.getAccessKey());
+	 System.out.println(aws.getSecretKey());
+	 aws.setPrediction_path("caaassas");
+	 aws.setWeatherDatapath("a");
+	 
+	  }
+	 
 }

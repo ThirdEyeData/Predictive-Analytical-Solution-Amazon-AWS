@@ -99,7 +99,7 @@ public class DashboardOperation extends HttpServlet {
 		
 		//Craete Redshift Table
 		Connection redshiftconn = redShift.redShiftConnect();
-		redShift.startCreateTable(redshiftconn);
+		
         
 		//Kony Push Notification
 		KonyMobilePushNotification kony = new KonyMobilePushNotification();
@@ -122,6 +122,8 @@ public class DashboardOperation extends HttpServlet {
 		System.out.println("Hello "+datatype);
 		
 		if(datatype.equals("weather")){
+			
+			redShift.startCreateTable(redshiftconn);
 			
 			String s3folder="weatherdata/weatherdata.csv";
 			//s3client.setRegion(Region.getRegion(Regions.US_WEST_2));

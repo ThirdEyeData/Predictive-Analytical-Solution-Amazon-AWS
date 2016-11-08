@@ -285,7 +285,7 @@ $( document ).ready(function() {
 	$("#changeconfsetting").click(function() {
 		
 		$.ajax({
-			url : "./DashboardOperation",
+			url : "./EditProperties",
 			type : "POST",
 			data : $("settingconfigfrom").serialize(),
 			success : function(data) {
