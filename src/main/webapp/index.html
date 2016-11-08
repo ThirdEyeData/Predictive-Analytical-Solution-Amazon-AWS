@@ -99,9 +99,9 @@ div#tooltip {
 					<li><a href="https://github.com/ThirdEyeCSS/AmazonImmersion"
 						id="github" target="_blank"><i class="fa fa-github fa-lg"
 							aria-hidden="true"></i> <span class="sr-only">(current)</span></a></li>
-					<!-- <li><a href="javascript:void(0);" id="setting"><i
+					<li><a href="javascript:void(0);" id="setting"><i
 							class="fa fa-cog fa-lg" aria-hidden="true"></i> <span
-							class="sr-only">(current)</span></a></li> -->
+							class="sr-only">(current)</span></a></li>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
@@ -405,96 +405,96 @@ function change_color()
 				<form role="form" id="settingconfigfrom">
                   <div class="form-group">
                     <label for="exampleInputEmail1">S3 Access Key</label>
-                      <input type="text" class="form-control"
-                      id="awsaccesskey" name="accesskey" required placeholder="S3 Access Key"/>
+                      <input type="text"   class="form-control"
+                      id="awsaccesskey" name="accesskey" required placeholder="S3 Access Key" readonly="readonly"/>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">S3 Secret Key</label>
-                      <input type="text" class="form-control"
+                      <input type="text" readonly class="form-control"
                           id="awssecretkey" name="secretkey" required placeholder="S3 Secret Key"/>
                   </div>
                    <div class="form-group">
                     <label for="exampleInputPassword1">Bucket Name</label>
-                      <input type="text" class="form-control"
+                      <input type="text" readonly class="form-control"
                           id="bucketname" name="bucketname"  required placeholder="Bucket Name"/>
                   </div>
                   
                   <div class="form-group">
                     <label for="exampleInputPassword1">Weather Data Path</label>
-                      <input type="text" class="form-control"
+                      <input type="text" readonly class="form-control"
                           id="weatherdatapath" name="weatherdatapathvalue" required placeholder="Stock Data Path"/>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Stock Data Path</label>
-                      <input type="text" class="form-control"
+                      <input type="text" readonly class="form-control"
                           id="stockdatapath" name="stockdatapathvalue" required placeholder="Stock Data Path"/>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">RedShift JDBC URL</label>
-                      <input type="text" class="form-control"
+                      <input type="text" readonly class="form-control"
                           id="redshiftjdbcurl" name="redshiftjdbcurl" required placeholder="RedShift JDBC URL"/>
                   </div>
                    <div class="form-group">
                     <label for="exampleInputPassword1">RedShift Master Username</label>
-                      <input type="text" class="form-control"
+                      <input type="text" readonly class="form-control"
                           id="redshiftusername" name="redshiftusername" required placeholder="RedShift Username"/>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">RedShift Master Password</label>
-                      <input type="text" class="form-control"
+                      <input type="text" readonly class="form-control"
                           id="redshiftuserpassword"  name="redshiftuserpassword" required placeholder="RedShift Master Password"/>
                   </div>
                    <div class="form-group">
                     <label for="exampleInputPassword1">Mysql DB Name</label>
-                      <input type="text" class="form-control"
+                      <input type="text" readonly class="form-control"
                           id="mysqldbname" name="mysqldbname" required placeholder="Mysql DB Name"/>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Mysql User Name</label>
-                      <input type="text" class="form-control"
+                      <input type="text" readonly class="form-control"
                           id="mysqlusername" name="mysqlusername" required placeholder="Mysql User Name"/>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Mysql Password</label>
-                      <input type="text" class="form-control"
+                      <input type="text" readonly class="form-control"
                           id="mysqlpassword" name="mysqlpassword" required placeholder="Mysql Password"/>
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Mysql JDBC URL</label>
-                      <input type="text" class="form-control"
+                      <input type="text" readonly class="form-control"
                           id="mysqljdbcurl" name="mysqljdbcurl" required placeholder="Mysql JDBC URL"/>
                   </div>
                   
                   <div class="form-group">
                     <label for="exampleInputPassword1">Mysql JDBC CLASS NAME</label>
-                      <input type="text" class="form-control"
+                      <input type="text" readonly class="form-control"
                           id="jdbcclass" name="mysqljdbcclass" required placeholder="Mysql JDBC URL"/>
                   </div>
                   
                   <div class="form-group">
                     <label for="exampleInputPassword1">CloudBeam Automation URL</label>
-                      <input type="text" class="form-control"
+                      <input type="text" readonly class="form-control"
                           id="cloudbeam_url" name="cloudbeam_auto_url" required placeholder="CloudBeam Automation URL"/>
                   </div>
                   
                   <div class="form-group">
                     <label for="exampleInputPassword1">CloudBeam Task Name</label>
-                      <input type="text" class="form-control"
+                      <input type="text" readonly class="form-control"
                           id="cbtaskname" name="cloudbeamtaskname" required placeholder="CloudBeam Task Name"/>
                   </div>
                   
                  <div class="form-group">
                     <label for="exampleInputPassword1">Kony Mobile URL</label>
-                      <input type="text" class="form-control"
+                      <input type="text" readonly class="form-control"
                           id="kony_url" name="kony_url" required placeholder="Kony Url"/>
                   </div>
                   
                   <div class="form-group">
                     <label for="exampleInputPassword1">Prediction Path</label>
-                      <input type="text" class="form-control"
+                      <input type="text" readonly class="form-control"
                           id="ppath" name="predictionpath" required placeholder="Prediction Path"/>
                   </div>
-                  <button type="button" id="changeconfsetting" class="btn btn-default">Submit</button>
+                  <!-- <button type="button" id="changeconfsetting" class="btn btn-default">Submit</button> -->
                 </form>
 			</div>
 			<!-- <div class="modal-footer">
