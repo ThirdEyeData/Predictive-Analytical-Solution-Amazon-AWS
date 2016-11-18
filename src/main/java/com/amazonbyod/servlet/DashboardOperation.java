@@ -223,21 +223,18 @@ public class DashboardOperation extends HttpServlet {
 			  client.close();
 			  out.write(cloudbeamtask+"---"+cloudbeamtaskstatus);
 		  }else if(datatype.equals("prediction")){
+			  String cloudbeamtaskstatus=buildJson("prediction","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
+				
 			    String pythonPath=awscredentials.getPrediction_path();
 			    TriggerKonyNotification tkony = new TriggerKonyNotification();
 			    Runtime runtime = Runtime.getRuntime();
 			    Process processs = runtime.exec("python "+pythonPath);
 				OutputStream output = processs.getOutputStream();
-				BufferedReader br = new BufferedReader(new InputStreamReader(processs.getInputStream()));		
-				String processString = "";		
-				while((processString = br.readLine()) != null) {			
-					
-					processString =processString+"\t"+ br.readLine();		
-					
-				}
+				BufferedReader br = new BufferedReader(new InputStreamReader(processs.getInputStream()));				
 				tkony.startNotification();
-				String cloudbeamtaskstatus=buildJson("prediction","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
 				out.println(cloudbeamtaskstatus);
+				//System.out.println(cloudbeamtaskstatus);
+				
 		  }else{
 			  
 		  }

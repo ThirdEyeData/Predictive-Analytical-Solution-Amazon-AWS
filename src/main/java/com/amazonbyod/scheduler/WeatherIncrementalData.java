@@ -24,7 +24,13 @@ public class WeatherIncrementalData implements Job {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		List<WeatherData> row = weather.incrementalWeatherData();
+		List<WeatherData> row = null;
+		try {
+			row = weather.incrementalWeatherData();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		redshift.insertWeatherData(conn, row);
 		try {
 			redshift.redShiftConnect();

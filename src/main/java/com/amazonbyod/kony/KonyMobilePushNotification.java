@@ -70,6 +70,7 @@ public class KonyMobilePushNotification {
 
 			HttpResponse response = client.execute(post);
 			responseData = EntityUtils.toString(response.getEntity());
+			System.out.println("Kony Response data "+responseData);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

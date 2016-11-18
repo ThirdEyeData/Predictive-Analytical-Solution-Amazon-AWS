@@ -366,13 +366,16 @@ public class DataMockupGenerator {
 
 	}
 
-	public List<WeatherData> incrementalWeatherData() {
+	public List<WeatherData> incrementalWeatherData() throws IOException {
 		
-		InputStream input = Thread.currentThread().getContextClassLoader()
-				.getResourceAsStream("Incremental_weather_data.csv");
+		//InputStream input = Thread.currentThread().getContextClassLoader()
+		//		.getResourceAsStream("Incremental_weather_data.csv");
 		
-		InputStreamReader r = new InputStreamReader(input);
-		String csvFile = "Incremental_weather_data.csv";
+		
+		String csvFile = awscredentials.getWeatherDatapath()+"//Incremental_weather_data.csv";
+		
+		//InputStreamReader r = new InputStreamReader(input);
+		//String csvFile = "Incremental_weather_data.csv";
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ",";
@@ -383,8 +386,8 @@ public class DataMockupGenerator {
 		List<WeatherData> row = new ArrayList<WeatherData>();
 		List<Integer> randomList = new ArrayList<Integer>();
 		try {
-			//br = new BufferedReader(new FileReader(csvFile));
-			br = new BufferedReader(r);
+			br = new BufferedReader(new FileReader(csvFile));
+			//br = new BufferedReader(r);
 
 			for (int i = 0; i < 7; i++) {
 				Random random = new Random();

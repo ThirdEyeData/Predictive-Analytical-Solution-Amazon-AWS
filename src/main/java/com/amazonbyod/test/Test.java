@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -36,9 +38,27 @@ public class Test {
 	}*/
 	
 	
-	public static void main(String args[]){
+	public static void testPython() throws IOException{
+		 
+			
+		Runtime runtime = Runtime.getRuntime();
+	    Process processs = runtime.exec("python C://Users//Administrator//Scheduler//Scheduler.py");
+		OutputStream output = processs.getOutputStream();
+		BufferedReader br = new BufferedReader(new InputStreamReader(processs.getInputStream()));		
+		String processString = "";		
+		while((processString = br.readLine()) != null) {			
+			
+			processString =processString+"\t"+ br.readLine();		
+			System.out.println(processString);
+		}
+	}
+	
+	
+	public static void main(String args[]) throws IOException{
+		
+		testPython();
 		//File file= new File("Incremental_weather_data.csv");
-		String csvFile = "Incremental_weather_data.csv";
+		/*String csvFile = "Incremental_weather_data.csv";
         BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ",";
@@ -67,6 +87,6 @@ public class Test {
                     e.printStackTrace();
                 }
             }
-        }
+        }*/
 	}
 }

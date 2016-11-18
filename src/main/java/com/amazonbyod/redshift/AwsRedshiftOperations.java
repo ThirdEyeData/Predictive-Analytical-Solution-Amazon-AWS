@@ -147,15 +147,25 @@ public class AwsRedshiftOperations {
 	public void startCreateTable(Connection conn) {
 		
 		String stockData="create table if not exists stock_data(stock_symbol varchar(255),stock_date date,stock_time TIMESTAMP,stock_open float,stock_high float,stock_low float,stock_close float,stock_vol int,stock_div float,stock_split int,stock_adjopen float,stock_adjhigh float,stock_adjlow float,stock_adjclose float,stock_adjvol int)";
-		String weather_storm_data="create table if exits weather_storm_data (station_code varchar(255),station_name varchar(255),lat float,lng float,wdate date,tmax int,tmin int,windspeed float,rainfall float,snowfall int,storm int)";
-		String weather_data_incremental="create table if exits weather_data_incremental (station_code varchar(255),station_name varchar(255),lat float,lng float,wdate date,tmax int,tmin int,windspeed float,rainfall float,snowfall int,storm int,flag int)";
-		String weather_prediction="create table if exits weather_prediction (station_code varchar(255),station_name varchar(255),lat float,lng float,wdate date,tmax int,tmin int,windspeed float,rainfall float,snowfall int,storm int,flag int,pre int)";
+		String weather_storm_data="create table if not exists weather_storm_data (station_code varchar(255),station_name varchar(255),lat float,lng float,wdate date,tmax int,tmin int,windspeed float,rainfall float,snowfall int,storm int)";
+		String weather_data_incremental="create table if not exists weather_data_incremental (station_code varchar(255),station_name varchar(255),lat float,lng float,wdate date,tmax int,tmin int,windspeed float,rainfall float,snowfall int,storm int,flag int)";
+		String weather_prediction="create table if not exists weather_prediction (station_code varchar(255),station_name varchar(255),lat float,lng float,wdate date,tmax int,tmin int,windspeed float,rainfall float,snowfall int,storm int,flag int,pre int)";
 		try {
-			Statement stmt = conn.createStatement();
+			/*Statement stmt = conn.createStatement();
 			stmt.executeUpdate(stockData);
 			stmt.executeUpdate(weather_storm_data);
 			stmt.executeUpdate(weather_data_incremental);
-			stmt.executeUpdate(weather_prediction);
+			stmt.executeUpdate(weather_prediction);*/
+			
+				Statement stmt = conn.createStatement();
+			   stmt.executeUpdate(stockData);
+			   Statement stmt1 = conn.createStatement();
+			   stmt1.executeUpdate(weather_storm_data);
+			   Statement stmt2 = conn.createStatement();
+			   stmt2.executeUpdate(weather_data_incremental);
+			   Statement stmt3 = conn.createStatement();
+			   stmt3.executeUpdate(weather_prediction);
+			   
 			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
