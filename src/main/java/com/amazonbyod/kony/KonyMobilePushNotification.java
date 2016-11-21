@@ -59,9 +59,10 @@ public class KonyMobilePushNotification {
 		AWSProjectProperties prop =new AWSProjectProperties();
 		//String url = "https://vikashsharma.messaging.konycloud.com:443/message";
 		String url = prop.getKony_url();
+		String kony_appid=prop.getKony_appid();
 		String responseData = "";
 		try {
-			StringEntity input = new StringEntity("{ \"messageRequest\" : { \"appId\" : \"da70e378-dc24-4803-8ebe-6677d46c9b74\",\"global\" : { },\"messages\" : {\"message\" : {\"content\" : {\"priorityService\" : \"true\",\"data\" : \"Weather Alert - Storm going to happen on "+wdate+" \",\"mimeType\" : \"text/plain\"},\"overrideMessageId\" : 0,\"startTimestamp\" : \"0\",\"expiryTimestamp\" : \"0\",\"subscribers\" : {\"subscriber\" :  {\"allActive\" : true } },\"platformSpecificProps\" : {\"title\" : \"AWS-BYOD\", \"android\" : {\"title\" : \"AWS-BYOD\" , \"priority\" : \"HIGH\" },  \"wns\" : {\"notificationType\" : \"TOAST\",\"text1\" : \"AWS-BYOD\",\"text2\" : \"Weather Alert - Storm going to happen on factory area !.\",\"params\" : { },\"image\" : { },\"text\" : { }}},\"type\" : \"PUSH\"} } } }");
+			StringEntity input = new StringEntity("{ \"messageRequest\" : { \"appId\" :"+kony_appid+",\"global\" : { },\"messages\" : {\"message\" : {\"content\" : {\"priorityService\" : \"true\",\"data\" : \"Weather Alert - Storm going to happen on "+wdate+" \",\"mimeType\" : \"text/plain\"},\"overrideMessageId\" : 0,\"startTimestamp\" : \"0\",\"expiryTimestamp\" : \"0\",\"subscribers\" : {\"subscriber\" :  {\"allActive\" : true } },\"platformSpecificProps\" : {\"title\" : \"AWS-BYOD\", \"android\" : {\"title\" : \"AWS-BYOD\" , \"priority\" : \"HIGH\" },  \"wns\" : {\"notificationType\" : \"TOAST\",\"text1\" : \"AWS-BYOD\",\"text2\" : \"Weather Alert - Storm going to happen on factory area !.\",\"params\" : { },\"image\" : { },\"text\" : { }}},\"type\" : \"PUSH\"} } } }");
 
 			HttpClient client = HttpClientBuilder.create().build();
 			HttpPost post = new HttpPost(url);
