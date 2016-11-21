@@ -372,7 +372,7 @@ public class DataMockupGenerator {
 		//		.getResourceAsStream("Incremental_weather_data.csv");
 		
 		
-		String csvFile = awscredentials.getWeatherDatapath()+"//Incremental_weather_data.csv";
+		String csvFile = awscredentials.getResourcePath()+"//Datasets//IncrementalWeatherData//Incremental_weather_data.csv";
 		
 		//InputStreamReader r = new InputStreamReader(input);
 		//String csvFile = "Incremental_weather_data.csv";

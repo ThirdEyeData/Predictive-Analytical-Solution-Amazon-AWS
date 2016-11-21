@@ -32,6 +32,10 @@ public class AWSProjectProperties {
 	private String kony_url = "kony_url";
 	private String weatherDatapath = "weatherDatapath";
 	private String prediction_path = "prediction_path";
+	private String resourcePath = "resourcePath";
+	private String redshift_dbname = "redshift_dbname";
+	private String redshifturl = "redshifturl";
+	private String kony_appid = "kony_appid";
 
 
 	
@@ -192,6 +196,30 @@ public class AWSProjectProperties {
 		return prop.getProperty(prediction_path);
 		
 	}
+	
+	public String getResourcePath() throws IOException {
+		prop.load(input);
+		return prop.getProperty(resourcePath);
+	}
+    
+	public String getRedshift_dbname() throws IOException {
+		prop.load(input);
+		return prop.getProperty(redshift_dbname);
+	}
+
+	public String getRedshifturl() throws IOException {
+		prop.load(input);
+		return prop.getProperty(redshifturl);
+	}
+
+	public String getKony_appid() throws IOException {
+		prop.load(input);
+		return prop.getProperty(kony_appid);
+	}
+
+	
+
+	
   
 	/*
 	 * Setter Part Starts Here
@@ -199,6 +227,22 @@ public class AWSProjectProperties {
 	 */
 	
 	OutputStream out = null;
+	
+	public void setRedshift_dbname(String redshift_dbname) {
+		this.redshift_dbname = redshift_dbname;
+	}
+
+	public void setRedshifturl(String redshifturl) {
+		this.redshifturl = redshifturl;
+	}
+
+	public void setKony_appid(String kony_appid) {
+		this.kony_appid = kony_appid;
+	}
+	
+	public void setResourcePath(String resourcePath) {
+		this.resourcePath = resourcePath;
+	}
 	public void setPrediction_path(String prediction_path) throws IOException {
 		File f = new File("ProjectConf.properties");
 		prop.load(input);
@@ -330,10 +374,7 @@ public class AWSProjectProperties {
 	  public static void main(String args[]) throws IOException{
 	  
 		  AWSProjectProperties aws = new AWSProjectProperties();
-	  System.out.println(aws.getAccessKey());
-	 System.out.println(aws.getSecretKey());
-	 aws.setPrediction_path("caaassas");
-	 aws.setWeatherDatapath("a");
+	System.out.println(aws.getResourcePath());
 	 
 	  }
 	 

@@ -29,8 +29,6 @@ import org.apache.http.message.BasicNameValuePair;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Region;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonbyod.awsprop.AWSProjectProperties;
@@ -97,7 +95,7 @@ public class DashboardOperation extends HttpServlet {
 		
 		DataMockupGenerator mockup = new DataMockupGenerator(); 
 		
-		//Craete Redshift Table
+		//Create Redshift Table
 		Connection redshiftconn = redShift.redShiftConnect();
 		
         
@@ -127,7 +125,7 @@ public class DashboardOperation extends HttpServlet {
 			
 			String s3folder="weatherdata/weatherdata.csv";
 			//s3client.setRegion(Region.getRegion(Regions.US_WEST_2));
-			s3.S3Upload(s3client, bucketName, s3folder, awscredentials.getWeatherDatapath());
+			s3.S3Upload(s3client, bucketName, s3folder, awscredentials.getResourcePath()+"//Datasets//HistoricalWeatherData//weather_data_updated.csv");
 			
 			String S3weatherdataUpload=buildJson("weatherdata","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
 			
@@ -225,7 +223,7 @@ public class DashboardOperation extends HttpServlet {
 		  }else if(datatype.equals("prediction")){
 			  String cloudbeamtaskstatus=buildJson("prediction","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
 				
-			    String pythonPath=awscredentials.getPrediction_path();
+			    String pythonPath=awscredentials.getResourcePath()+"//Scripts//PythonScript//Scheduler.py "+awscredentials.getResourcePath()+" "+awscredentials.getAccessKey()+" "+awscredentials.getSecretKey()+" "+awscredentials.getBucketName()+" "+awscredentials.getRedshift_dbname()+" "+awscredentials.getMaster_username()+" "+awscredentials.getMaster_password()+" "+awscredentials.getRedshifturl();
 			    TriggerKonyNotification tkony = new TriggerKonyNotification();
 			    Runtime runtime = Runtime.getRuntime();
 			    Process processs = runtime.exec("python "+pythonPath);
