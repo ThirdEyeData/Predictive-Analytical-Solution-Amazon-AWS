@@ -99,7 +99,7 @@
 		<finalName>AmazonByod</finalName>
 		<resources>
 			<resource>
-				<directory>src/main</directory>
+				<directory>WEB-INF/classes</directory>
 				<includes>
 					<include>**/*.properties</include>
 					<include>**/*.json</include>
