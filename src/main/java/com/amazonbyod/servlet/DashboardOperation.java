@@ -223,7 +223,7 @@ public class DashboardOperation extends HttpServlet {
 		  }else if(datatype.equals("prediction")){
 			  String cloudbeamtaskstatus=buildJson("prediction","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
 				
-			    String pythonPath=awscredentials.getResourcePath()+"//Scripts//PythonScript//Scheduler.py "+awscredentials.getResourcePath()+" "+awscredentials.getAccessKey()+" "+awscredentials.getSecretKey()+" "+awscredentials.getBucketName()+" "+awscredentials.getRedshift_dbname()+" "+awscredentials.getMaster_username()+" "+awscredentials.getMaster_password()+" "+awscredentials.getRedshifturl();
+			    String pythonPath=awscredentials.getResourcePath()+"//Scripts//PythonScript//Scheduler.py "+awscredentials.getResourcePath()+" "+awscredentials.getAccessKey()+" "+awscredentials.getSecretKey()+" "+awscredentials.getBucketName()+" "+awscredentials.getRedshift_dbname()+" "+awscredentials.getMaster_username()+" "+awscredentials.getMaster_password()+" "+awscredentials.getRedshifturl()+" "+awscredentials.getRedshiftport();
 			    System.out.println(pythonPath);
 			    TriggerKonyNotification tkony = new TriggerKonyNotification();
 			    Runtime runtime = Runtime.getRuntime();
