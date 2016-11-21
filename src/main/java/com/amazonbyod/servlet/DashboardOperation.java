@@ -182,7 +182,7 @@ public class DashboardOperation extends HttpServlet {
 		         mysql.mysqlDisconnect(conn);
 		         String mysqlstatus=buildJson("mysql","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
 		         
-		         String filePath=mockup.minMockUpData(awscredentials.getStockDatapath(), startDate, endDate,
+		         String filePath=mockup.minMockUpData(awscredentials.getResourcePath()+"//StockData", startDate, endDate,
 						companySymbol, 35, 42, 35000, 37541, stockChanger);
 		 		
 		 		 String[] filePathSplit=filePath.split("/");
@@ -224,6 +224,7 @@ public class DashboardOperation extends HttpServlet {
 			  String cloudbeamtaskstatus=buildJson("prediction","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
 				
 			    String pythonPath=awscredentials.getResourcePath()+"//Scripts//PythonScript//Scheduler.py "+awscredentials.getResourcePath()+" "+awscredentials.getAccessKey()+" "+awscredentials.getSecretKey()+" "+awscredentials.getBucketName()+" "+awscredentials.getRedshift_dbname()+" "+awscredentials.getMaster_username()+" "+awscredentials.getMaster_password()+" "+awscredentials.getRedshifturl();
+			    System.out.println(pythonPath);
 			    TriggerKonyNotification tkony = new TriggerKonyNotification();
 			    Runtime runtime = Runtime.getRuntime();
 			    Process processs = runtime.exec("python "+pythonPath);

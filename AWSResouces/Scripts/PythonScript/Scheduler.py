@@ -17,21 +17,25 @@ def scheduler():
     redshiftdbname=str(sys.argv[5])
     redshiftusername=str(sys.argv[6])
     redshiftpassword=str(sys.argv[7]) 
-    redshifthost=str(sys.argv[8])  
+    redshifthost=str(sys.argv[8]) 
+    redshiftport=str(sys.argv[9]) 
     # do something here ...
     # call f() again in 60 seconds
     threading.Timer(300, scheduler).start()
-    subprocess.check_call(['Rscript', resoucepath+'//Scripts//RScript//WeatherLR.R '+resoucepath], shell=False)
+    #print ("File Path: %s" % str(sys.argv[1]))
+    rpath=resoucepath+'//Scripts//RScript//WeatherLR.R'
+    dburl=redshifthost+":"+redshiftport+"/"+redshiftdbname
+    subprocess.check_call(['Rscript', rpath, resoucepath, redshiftusername, redshiftpassword, dburl], shell=False)
     #CSV Modification
     csvmofification(resoucepath)
     #Connect to S3
     s3fileuplaod(resoucepath,accesskey,secretkey,bucketname)
     #RedShift Connection
-    redshiftUpload(redshiftdbname,redshiftusername,redshiftpassword,redshifthost)
+    redshiftUpload(redshiftdbname,redshiftusername,redshiftpassword,redshifthost,accesskey,secretkey,bucketname)
 
 
 #S3 File Upload
-def s3fileuplaod(accesskey,secretkey,bucketname):
+def s3fileuplaod(resoucepath,accesskey,secretkey,bucketname):
     s3 = tinys3.Connection(accesskey,secretkey,tls=True,endpoint='s3-us-west-2.amazonaws.com')
     f = open(resoucepath+'//Output//Prediction-new.csv','rb')
     s3.upload('Prediction-new.csv',f,bucketname)
@@ -50,7 +54,7 @@ def csvmofification(resoucepath):
 
 #RedShift Connection
 def redshiftUpload(redshiftdbname,redshiftusername,redshiftpassword,redshifthost,accesskey,secretkey,bucketname):
-   conn_string = "dbname='"+redshiftdbname+"' port='5439' user='"+redshiftusername+"' password='"+redshiftpassword+"' host='"+redshifthost+"'";
+   conn_string = "dbname='"+redshiftdbname+"' port='"+redshiftport+"' user='"+redshiftusername+"' password='"+redshiftpassword+"' host='"+redshifthost+"'";
    conn = psycopg2.connect(conn_string);
 
    truncatesql = conn.cursor();

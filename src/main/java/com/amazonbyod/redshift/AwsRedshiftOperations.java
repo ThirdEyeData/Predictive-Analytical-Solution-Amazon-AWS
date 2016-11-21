@@ -22,7 +22,7 @@ public class AwsRedshiftOperations {
 
 	public Connection redShiftConnect() throws IOException {
 		
-		 String dbURL = awscredentials.getRedshift_jdbc_url();
+		 String dbURL = "jdbc:redshift://"+awscredentials.getRedshifturl()+":"+awscredentials.getRedshiftport()+"/"+awscredentials.getRedshift_dbname();
 		 String MasterUsername = awscredentials.getMaster_username();
 		 String MasterUserPassword = awscredentials.getMaster_password();
 		 

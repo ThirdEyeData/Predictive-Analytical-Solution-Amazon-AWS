@@ -1,4 +1,3 @@
-
 #--------------------Load data from Redshift-------------------#
 #--------------------------------------------------------------#
 
@@ -9,11 +8,11 @@
 
 library(rJava)
 library(RJDBC)
-#devtools::install_github("pingles/redshift-r",force = TRUE)
-devtools::install_github("pingles/redshift-r")
+devtools::install_github("pingles/redshift-r",force = TRUE)
+#devtools::install_github("pingles/redshift-r")
 require(redshift)
 args <- commandArgs(trailingOnly=TRUE)
-conn <- redshift.connect("jdbc:postgresql://vredshift.cziozxqpyojq.us-west-2.redshift.amazonaws.com:5439/mydb", username="master", password="BigData257")
+conn <- redshift.connect(paste("jdbc:postgresql://",args[4],sep = ""), username=args[2], password=args[3])
 
 
 
@@ -45,4 +44,5 @@ final <- cbind(test, predicted.results)
 
 #write a csv and load to s3
 write.csv(final, file = paste(args[1],"//Output//prediction.csv",sep = ""))
+
 

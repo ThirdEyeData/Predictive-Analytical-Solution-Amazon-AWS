@@ -36,6 +36,7 @@ public class AWSProjectProperties {
 	private String redshift_dbname = "redshift_dbname";
 	private String redshifturl = "redshifturl";
 	private String kony_appid = "kony_appid";
+	private String redshiftport = "redshiftport";
 
 
 	
@@ -217,9 +218,11 @@ public class AWSProjectProperties {
 		return prop.getProperty(kony_appid);
 	}
 
-	
+	public String getRedshiftport() throws IOException {
+		prop.load(input);
+		return prop.getProperty(redshiftport);
+	}
 
-	
   
 	/*
 	 * Setter Part Starts Here
@@ -227,6 +230,11 @@ public class AWSProjectProperties {
 	 */
 	
 	OutputStream out = null;
+	
+	public void setRedshiftport(String redshiftport) {
+		this.redshiftport = redshiftport;
+	}
+
 	
 	public void setRedshift_dbname(String redshift_dbname) {
 		this.redshift_dbname = redshift_dbname;
