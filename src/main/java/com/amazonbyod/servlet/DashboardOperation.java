@@ -192,7 +192,7 @@ public class DashboardOperation extends HttpServlet {
 		         String s3uplaod=buildJson("s3uploadmockup","green","<p style='color:green'>Successfully Completed</p> On:"+new Date()); 
 		         
 		        Connection redShiftConnect = redShift.redShiftConnect();
-		 		redShift.loadDatafromS3(redShiftConnect, "stock_datademo", bucketName+"/stockdata", fileName);
+		 		redShift.loadDatafromS3(redShiftConnect, "stock_data", bucketName+"/stockdata", fileName);
 		 		redShift.redShiftDisconnect(redShiftConnect);
 		        String redshiftload=buildJson("redshiftmockup","green","<p style='color:green'>Successfully Completed</p> On:"+new Date());
 			    out.write(weatherDataStart+"---"+mysqlstatus+"---"+s3uplaod+"---"+redshiftload);
