@@ -51,7 +51,7 @@ public class StreamingMockupData {
 			Trigger trigger1 = TriggerBuilder.newTrigger()
 					.withIdentity("every5SecondTrigger", "group1")
 					.startAt(new Date(System.currentTimeMillis()))
-					.withSchedule( CronScheduleBuilder.cronSchedule( "0/10 * * * * ?"))
+					.withSchedule( CronScheduleBuilder.cronSchedule("0/10 * * * * ?"))
 					.build();
 			
 			job1.getJobDataMap().put("CompanySymbol", getCompanySymbol());
@@ -72,7 +72,7 @@ public class StreamingMockupData {
 			//This trigger will run every 10 sec for 4 times
 			CronTrigger trigger2 = TriggerBuilder.newTrigger()
 		            .withIdentity("everydayTrigger", "group2")
-		            .withSchedule( CronScheduleBuilder.cronSchedule( "0/20 * * * * ?"))
+		            .withSchedule( CronScheduleBuilder.cronSchedule("0/20 * * * * ?"))
 		            .build();
 			sched.scheduleJob(job2, trigger2);
 	

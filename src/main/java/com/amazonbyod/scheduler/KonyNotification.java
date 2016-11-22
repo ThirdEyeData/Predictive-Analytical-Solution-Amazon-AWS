@@ -7,12 +7,21 @@ import org.quartz.JobExecutionException;
 import com.amazonbyod.kony.KonyMobilePushNotification;
 
 public class KonyNotification implements Job{
-
+ 
+	KonyMobilePushNotification konyn = new KonyMobilePushNotification();
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 		// TODO Auto-generated method stub
-		 KonyMobilePushNotification konyn = new KonyMobilePushNotification();
-		 konyn.getStorm();
+		 System.out.println("Inside Scheduler Kony");
+		 //konyn.getStorm();
+		 try {
+			 konyn.getStorm();
+			 //konyn.sendNotification("2016*11-23");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }

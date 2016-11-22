@@ -13,6 +13,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.transfer.TransferManager;
 import com.amazonaws.services.s3.transfer.Upload;
 import com.amazonbyod.awsprop.AWSProjectProperties;
+import com.amazonbyod.scheduler.TriggerKonyNotification;
 
 public class Test {
 	
@@ -56,7 +57,8 @@ public class Test {
 	
 	public static void main(String args[]) throws IOException{
 		
-		testPython();
+		TriggerKonyNotification t = new TriggerKonyNotification();
+		t.startNotification();
 		//File file= new File("Incremental_weather_data.csv");
 		/*String csvFile = "Incremental_weather_data.csv";
         BufferedReader br = null;

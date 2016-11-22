@@ -13,15 +13,19 @@ import org.quartz.SchedulerFactory;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
+import com.amazonbyod.kony.KonyMobilePushNotification;
+
 public class TriggerKonyNotification {
 	
 	public void startNotification(){
 		// First we must get a reference to a scheduler
-        SchedulerFactory sf = new StdSchedulerFactory();
+        
         try {
+        	SchedulerFactory sf = new StdSchedulerFactory();
+        	System.out.println("Kony App Start");
 			Scheduler sched = sf.getScheduler();
 			JobDetail job3 = JobBuilder.newJob(KonyNotification.class)
-					.withIdentity("Kony Mobile Notification", "group3")
+					.withIdentity("Kony Mobile Notification", "group5")
 					.build();
 
 					// get a "nice round" time a few seconds in the future....
@@ -29,8 +33,8 @@ public class TriggerKonyNotification {
 
 					//This trigger will run every 10 sec for 4 times
 					CronTrigger trigger3 = TriggerBuilder.newTrigger()
-				            .withIdentity("everydayTrigger", "group3")
-				            .withSchedule( CronScheduleBuilder.cronSchedule( "0 0/6 * 1/1 * ? *"))
+				            .withIdentity("everydayTrigger", "group5")
+				            .withSchedule( CronScheduleBuilder.cronSchedule( "0 0/3 * 1/1 * ? *"))
 				            .build();
 					sched.scheduleJob(job3, trigger3);
 			

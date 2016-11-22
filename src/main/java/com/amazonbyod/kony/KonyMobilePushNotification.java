@@ -25,9 +25,11 @@ import com.amazonbyod.redshift.AwsRedshiftOperations;
 public class KonyMobilePushNotification {
 	
 	//KonyMobilePushNotification kony = new KonyMobilePushNotification();
+	static AwsRedshiftOperations redshift = new AwsRedshiftOperations();
 	
-	public void getStorm(){
-		AwsRedshiftOperations redshift = new AwsRedshiftOperations();
+	public static void getStorm(){
+		System.out.println("Inside GetStorm");
+		
 		try {
 			Connection conn = redshift.redShiftConnect();
 			Statement stmt = conn.createStatement();
@@ -37,7 +39,10 @@ public class KonyMobilePushNotification {
 			String sql = "select pre,wdate from weather_prediction;";
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
+				System.out.println(rs.getString("wdate"));
 				if (rs.getInt(1) == 1) {
+					
+					System.out.println("Storm on "+rs.getString("wdate"));
 					System.out.println(sendNotification(rs.getString("wdate")));
 					//System.out.println(rs.getString("wdate"));
 				}
@@ -55,7 +60,7 @@ public class KonyMobilePushNotification {
 		}
 	}
 	
-	public String sendNotification(String wdate) throws IOException{
+	public static String sendNotification(String wdate) throws IOException{
 		AWSProjectProperties prop =new AWSProjectProperties();
 		//String url = "https://vikashsharma.messaging.konycloud.com:443/message";
 		String url = prop.getKony_url();
@@ -86,9 +91,14 @@ public class KonyMobilePushNotification {
 		
 	}
 	
+	
+	
    public static void main(String args[]) throws IOException{
 	   KonyMobilePushNotification konyn = new KonyMobilePushNotification();
-	   konyn.sendNotification("hello vikash");
+	   konyn.getStorm();
+	   
    }
+
+
 
 }
