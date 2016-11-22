@@ -55,6 +55,11 @@ public class EditProperties extends HttpServlet {
 		String cloudbeam_taskname = prop.getCloudbeam_taskname();
 		String kony_url = prop.getKony_url();
 		String prediction_path = prop.getPrediction_path();
+		String resourcepath = prop.getResourcePath();
+		String redshiftport = prop.getRedshiftport();
+		String redshifturl = prop.getRedshifturl();
+		String redshiftdbname = prop.getRedshift_dbname();
+		String konyappid = prop.getKony_appid();
 		
 		HashMap<String, String> map = new HashMap<String, String>();
 		
@@ -75,6 +80,11 @@ public class EditProperties extends HttpServlet {
 		map.put("kony_url", kony_url);
 		map.put("weatherDatapath", weatherDatapath);
 		map.put("prediction_path", prediction_path);
+		map.put("resourcepath", resourcepath);
+		map.put("redshiftport", redshiftport);
+		map.put("redshifturl", redshifturl);
+		map.put("redshiftdbname", redshiftdbname);
+		map.put("konyappid", konyappid);
 		
 		JSONObject obj = new JSONObject();
 		try {

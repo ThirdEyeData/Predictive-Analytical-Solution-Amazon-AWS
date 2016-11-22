@@ -268,6 +268,11 @@ $( document ).ready(function() {
 					$("#kony_url").val(data.projectProp.kony_url);
 					$("#weatherdatapath").val(data.projectProp.weatherDatapath);
 					$("#ppath").val(data.projectProp.prediction_path);
+					$("#resoucepath").val(data.projectProp.resourcepath);
+					$("#redshifthosturl").val(data.projectProp.redshifturl);
+					$("#redshiftport").val(data.projectProp.redshiftport);
+					$("#redshiftdbname").val(data.projectProp.redshiftdbname);
+					$("#konyappid").val(data.projectProp.konyappid);
 					$('#settingmodal').modal();
 				},
 				error : function(xhr, ajaxOptions, thrownError) {

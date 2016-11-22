@@ -382,7 +382,7 @@ public class AWSProjectProperties {
 	  public static void main(String args[]) throws IOException{
 	  
 		  AWSProjectProperties aws = new AWSProjectProperties();
-	System.out.println(aws.getResourcePath());
+	System.out.println(aws.getStockDatapath());
 	 
 	  }
 	 

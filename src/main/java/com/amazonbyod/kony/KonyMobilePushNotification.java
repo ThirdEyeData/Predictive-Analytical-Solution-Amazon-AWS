@@ -62,8 +62,8 @@ public class KonyMobilePushNotification {
 		String kony_appid=prop.getKony_appid();
 		String responseData = "";
 		try {
-			StringEntity input = new StringEntity("{ \"messageRequest\" : { \"appId\" :"+kony_appid+",\"global\" : { },\"messages\" : {\"message\" : {\"content\" : {\"priorityService\" : \"true\",\"data\" : \"Weather Alert - Storm going to happen on "+wdate+" \",\"mimeType\" : \"text/plain\"},\"overrideMessageId\" : 0,\"startTimestamp\" : \"0\",\"expiryTimestamp\" : \"0\",\"subscribers\" : {\"subscriber\" :  {\"allActive\" : true } },\"platformSpecificProps\" : {\"title\" : \"AWS-BYOD\", \"android\" : {\"title\" : \"AWS-BYOD\" , \"priority\" : \"HIGH\" },  \"wns\" : {\"notificationType\" : \"TOAST\",\"text1\" : \"AWS-BYOD\",\"text2\" : \"Weather Alert - Storm going to happen on factory area !.\",\"params\" : { },\"image\" : { },\"text\" : { }}},\"type\" : \"PUSH\"} } } }");
-
+			StringEntity input = new StringEntity("{ \"messageRequest\" : { \"appId\" :\""+kony_appid+"\",\"global\" : { },\"messages\" : {\"message\" : {\"content\" : {\"priorityService\" : \"true\",\"data\" : \"Weather Alert - Storm going to happen on "+wdate+" \",\"mimeType\" : \"text/plain\"},\"overrideMessageId\" : 0,\"startTimestamp\" : \"0\",\"expiryTimestamp\" : \"0\",\"subscribers\" : {\"subscriber\" :  {\"allActive\" : true } },\"platformSpecificProps\" : {\"title\" : \"AWS-BYOD\", \"android\" : {\"title\" : \"AWS-BYOD\" , \"priority\" : \"HIGH\" },  \"wns\" : {\"notificationType\" : \"TOAST\",\"text1\" : \"AWS-BYOD\",\"text2\" : \"Weather Alert - Storm going to happen on factory area !.\",\"params\" : { },\"image\" : { },\"text\" : { }}},\"type\" : \"PUSH\"} } } }");
+            System.out.println("{ \"messageRequest\" : { \"appId\" :"+kony_appid+",\"global\" : { },\"messages\" : {\"message\" : {\"content\" : {\"priorityService\" : \"true\",\"data\" : \"Weather Alert - Storm going to happen on "+wdate+" \",\"mimeType\" : \"text/plain\"},\"overrideMessageId\" : 0,\"startTimestamp\" : \"0\",\"expiryTimestamp\" : \"0\",\"subscribers\" : {\"subscriber\" :  {\"allActive\" : true } },\"platformSpecificProps\" : {\"title\" : \"AWS-BYOD\", \"android\" : {\"title\" : \"AWS-BYOD\" , \"priority\" : \"HIGH\" },  \"wns\" : {\"notificationType\" : \"TOAST\",\"text1\" : \"AWS-BYOD\",\"text2\" : \"Weather Alert - Storm going to happen on factory area !.\",\"params\" : { },\"image\" : { },\"text\" : { }}},\"type\" : \"PUSH\"} } } }");
 			HttpClient client = HttpClientBuilder.create().build();
 			HttpPost post = new HttpPost(url);
 			post.setHeader("content-type", "application/json");
@@ -86,9 +86,9 @@ public class KonyMobilePushNotification {
 		
 	}
 	
-   public static void main(String args[]){
+   public static void main(String args[]) throws IOException{
 	   KonyMobilePushNotification konyn = new KonyMobilePushNotification();
-	   konyn.getStorm();
+	   konyn.sendNotification("hello vikash");
    }
 
 }

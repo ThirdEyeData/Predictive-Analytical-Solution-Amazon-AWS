@@ -403,6 +403,11 @@ function change_color()
 			</div>
 			<div class="modal-body">
 				<form role="form" id="settingconfigfrom">
+				<div class="form-group">
+                    <label for="exampleInputEmail1">Resource Path</label>
+                      <input type="text"   class="form-control"
+                      id="resoucepath" name="resoucepath" required placeholder="Resource Path" readonly="readonly"/>
+                  </div>
                   <div class="form-group">
                     <label for="exampleInputEmail1">S3 Access Key</label>
                       <input type="text"   class="form-control"
@@ -418,21 +423,27 @@ function change_color()
                       <input type="text" readonly class="form-control"
                           id="bucketname" name="bucketname"  required placeholder="Bucket Name"/>
                   </div>
-                  
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Weather Data Path</label>
-                      <input type="text" readonly class="form-control"
-                          id="weatherdatapath" name="weatherdatapathvalue" required placeholder="Stock Data Path"/>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Stock Data Path</label>
-                      <input type="text" readonly class="form-control"
-                          id="stockdatapath" name="stockdatapathvalue" required placeholder="Stock Data Path"/>
-                  </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">RedShift JDBC URL</label>
                       <input type="text" readonly class="form-control"
                           id="redshiftjdbcurl" name="redshiftjdbcurl" required placeholder="RedShift JDBC URL"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">RedShift HOST URL</label>
+                      <input type="text" readonly class="form-control"
+                          id="redshifthosturl" name="redshifthosturl" required placeholder="RedShift HOST URL"/>
+                  </div>
+                 
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">RedShift PORT</label>
+                      <input type="text" readonly class="form-control"
+                          id="redshiftport" name="redshiftport" required placeholder="RedShift PORT"/>
+                  </div>
+                  
+                   <div class="form-group">
+                    <label for="exampleInputPassword1">RedShift DB Name</label>
+                      <input type="text" readonly class="form-control"
+                          id="redshiftdbname" name="redshiftdbname" required placeholder="RedShift DB Name"/>
                   </div>
                    <div class="form-group">
                     <label for="exampleInputPassword1">RedShift Master Username</label>
@@ -488,11 +499,10 @@ function change_color()
                       <input type="text" readonly class="form-control"
                           id="kony_url" name="kony_url" required placeholder="Kony Url"/>
                   </div>
-                  
                   <div class="form-group">
-                    <label for="exampleInputPassword1">Prediction Path</label>
+                    <label for="exampleInputPassword1">Kony APP ID</label>
                       <input type="text" readonly class="form-control"
-                          id="ppath" name="predictionpath" required placeholder="Prediction Path"/>
+                          id="konyappid" name="konyappid" required placeholder="Kony APP ID"/>
                   </div>
                   <!-- <button type="button" id="changeconfsetting" class="btn btn-default">Submit</button> -->
                 </form>
