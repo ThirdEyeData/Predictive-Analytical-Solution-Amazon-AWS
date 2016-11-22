@@ -31,7 +31,7 @@ def scheduler():
     #Connect to S3
     s3fileuplaod(resoucepath,accesskey,secretkey,bucketname)
     #RedShift Connection
-    redshiftUpload(redshiftdbname,redshiftusername,redshiftpassword,redshifthost,accesskey,secretkey,bucketname)
+    redshiftUpload(redshiftdbname,redshiftusername,redshiftpassword,redshifthost,accesskey,secretkey,bucketname,redshiftport)
 
 
 #S3 File Upload
@@ -53,7 +53,7 @@ def csvmofification(resoucepath):
          writer.writerow(row[begin:end])
 
 #RedShift Connection
-def redshiftUpload(redshiftdbname,redshiftusername,redshiftpassword,redshifthost,accesskey,secretkey,bucketname):
+def redshiftUpload(redshiftdbname,redshiftusername,redshiftpassword,redshifthost,accesskey,secretkey,bucketname,redshiftport):
    conn_string = "dbname='"+redshiftdbname+"' port='"+redshiftport+"' user='"+redshiftusername+"' password='"+redshiftpassword+"' host='"+redshifthost+"'";
    conn = psycopg2.connect(conn_string);
 
