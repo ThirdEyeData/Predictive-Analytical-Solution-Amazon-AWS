@@ -12,3 +12,5 @@ Deploying this solutio, you will accomplish the following goals:
 - Use a machine learning model for predictive analytics.
 - Create a predictive dashboard for visualization.
 - Use a mobile app to get notifications generated after the predictive analysis.
+
+<strong>See the full details <a href="https://thirdeyedata.io/open-source-software-oss-solutions/predictive-analytics-solution/">here</a></storng>
